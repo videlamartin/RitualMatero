@@ -8,34 +8,47 @@ import { HeroSection } from './hero-section'
 import type { Product } from '@/types'
 
 export const metadata: Metadata = {
-  title: 'El Palomo 1950 | Indumentaria Oficial Independiente',
-  description: 'Tienda oficial de ropa de Club Atlético Independiente. Camisetas, buzos, pantalones y accesorios Puma y Kanji. Pago al recibir. Envíos a todo Argentina.',
+  title: 'Ritual Matero | Mates, Yerbas y Accesorios Artesanales',
+  description:
+    'Mates artesanales, yerbas y accesorios. Envíos a todo el país.',
 }
 
 const CATEGORIES = [
   {
-    href: '/catalogo?categoria=camisetas',
-    label: 'Camisetas',
-    desc: 'Puma oficial',
-    image: 'https://picsum.photos/seed/cat-camisetas/600/700',
+    href: '/catalogo?categoria=mates',
+    label: 'Mates',
+    desc: 'Calabaza, madera y acero',
+    image: 'https://picsum.photos/seed/cat-mates-rm/600/700',
   },
   {
-    href: '/catalogo?categoria=buzos',
-    label: 'Buzos',
-    desc: 'Kanji & Puma',
-    image: 'https://picsum.photos/seed/cat-buzos/600/700',
+    href: '/catalogo?categoria=bombillas',
+    label: 'Bombillas',
+    desc: 'Alpaca y acero inoxidable',
+    image: 'https://picsum.photos/seed/cat-bombillas-rm/600/700',
   },
   {
-    href: '/catalogo?categoria=pantalones',
-    label: 'Pantalones',
-    desc: 'Training & Buzo',
-    image: 'https://picsum.photos/seed/cat-pantalones/600/700',
+    href: '/catalogo?categoria=termos',
+    label: 'Termos',
+    desc: 'Acero inoxidable',
+    image: 'https://picsum.photos/seed/cat-termos-rm/600/700',
+  },
+  {
+    href: '/catalogo?categoria=yerbas',
+    label: 'Yerbas',
+    desc: 'Selección premium',
+    image: 'https://picsum.photos/seed/cat-yerbas-rm/600/700',
   },
   {
     href: '/catalogo?categoria=accesorios',
     label: 'Accesorios',
-    desc: 'Gorras, bufandas & más',
-    image: 'https://picsum.photos/seed/cat-accesorios/600/700',
+    desc: 'Yerberas, posmates y más',
+    image: 'https://picsum.photos/seed/cat-accesorios-rm/600/700',
+  },
+  {
+    href: '/catalogo?categoria=combos',
+    label: 'Combos',
+    desc: 'El regalo perfecto',
+    image: 'https://picsum.photos/seed/cat-combos-rm/600/700',
   },
 ]
 
@@ -47,7 +60,7 @@ const TRUST_ITEMS = [
       </svg>
     ),
     title: 'Pago al recibir',
-    desc: 'Abonás cuando llega el producto a tu domicilio. Sin riesgos.',
+    desc: 'Abonás cuando llega el producto a tu domicilio. Sin adelantos, sin riesgos.',
   },
   {
     icon: (
@@ -61,12 +74,11 @@ const TRUST_ITEMS = [
   {
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
       </svg>
     ),
-    title: 'Fotos y videos propios',
-    desc: 'Todo el contenido es nuestro — sin catálogos genéricos.',
+    title: 'Productos seleccionados',
+    desc: 'Cada producto pasa por nuestra curaduría. Solo lo mejor llega a tu mesa.',
   },
 ]
 
@@ -96,31 +108,40 @@ export default async function HomePage() {
       <HeroSection />
 
       {/* CATEGORIES */}
-      <section id="categories" className="py-20 bg-black-900">
+      <section id="categories" className="py-20" style={{ backgroundColor: '#F7F2E6' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 mb-12">
             <h2 className="section-title">Categorías</h2>
-            <div className="flex-1 h-px bg-white/5" />
+            <div className="flex-1 h-px" style={{ backgroundColor: '#E0D9CC' }} />
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
             {CATEGORIES.map((cat) => (
               <Link
                 key={cat.href}
                 href={cat.href}
-                className="relative overflow-hidden aspect-[3/4] group block bg-black-700 border border-white/5 hover:border-red-primary/50 transition-all duration-300"
+                className="relative overflow-hidden aspect-[3/4] group block rounded-card transition-all duration-300"
+                style={{
+                  backgroundColor: '#EDE8DC',
+                  border: '1px solid #E0D9CC',
+                }}
                 aria-label={`Ver ${cat.label}`}
               >
                 <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.04]"
                   style={{ backgroundImage: `url(${cat.image})` }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black-900/90 via-black-900/30 to-transparent" />
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: 'linear-gradient(to top, rgba(44,64,46,0.80) 0%, rgba(44,64,46,0.10) 60%, transparent 100%)',
+                  }}
+                />
                 <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <h3 className="font-display text-2xl text-white uppercase tracking-wider group-hover:text-red-primary transition-colors">
+                  <h3 className="font-display text-xl text-white uppercase tracking-wider">
                     {cat.label}
                   </h3>
-                  <p className="font-condensed text-xs text-gray-accent mt-0.5 uppercase tracking-wider">
+                  <p className="font-condensed text-xs mt-0.5 uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.7)' }}>
                     {cat.desc}
                   </p>
                 </div>
@@ -131,14 +152,17 @@ export default async function HomePage() {
       </section>
 
       {/* FEATURED PRODUCTS */}
-      <section className="py-20 bg-black-800/50">
+      <section className="py-20" style={{ backgroundColor: '#EDE8DC' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-12">
             <div className="flex items-center gap-4">
               <h2 className="section-title">Destacados</h2>
-              <div className="hidden sm:block h-px w-24 bg-red-primary/50" />
+              <div className="hidden sm:block h-px w-24" style={{ backgroundColor: '#B4A194' }} />
             </div>
-            <Link href="/catalogo" className="btn-secondary text-xs px-6 py-2 hidden sm:flex">
+            <Link
+              href="/catalogo"
+              className="btn-secondary text-xs px-6 py-2 hidden sm:flex"
+            >
               Ver todo
             </Link>
           </div>
@@ -148,33 +172,43 @@ export default async function HomePage() {
           ) : (
             <div className="space-y-6">
               <ProductGridSkeleton count={8} />
-              <p className="text-center font-condensed text-xs text-gray-muted uppercase tracking-wider">
+              <p
+                className="text-center font-condensed text-xs uppercase tracking-wider"
+                style={{ color: '#8A8A8A' }}
+              >
                 Conectando con Supabase...
               </p>
             </div>
           )}
 
           <div className="mt-10 text-center sm:hidden">
-            <Link href="/catalogo" className="btn-secondary">Ver todo el catálogo</Link>
+            <Link href="/catalogo" className="btn-secondary">
+              Ver toda la tienda
+            </Link>
           </div>
         </div>
       </section>
 
       {/* TRUST BANNER */}
-      <section className="py-16 bg-black-900 border-y border-white/5">
+      <section className="py-16" style={{ backgroundColor: '#F7F2E6', borderTop: '1px solid #E0D9CC', borderBottom: '1px solid #E0D9CC' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4">
             {TRUST_ITEMS.map((item, i) => (
               <div
                 key={i}
-                className="flex flex-col sm:flex-row items-start sm:items-center gap-5 p-6 border border-white/5 hover:border-red-primary/30 transition-colors"
+                className="flex flex-col sm:flex-row items-start sm:items-center gap-5 p-6 rounded-card transition-all duration-300"
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  border: '1px solid #E0D9CC',
+                  boxShadow: '0 2px 8px rgba(44, 64, 46, 0.06)',
+                }}
               >
-                <div className="text-red-primary flex-shrink-0">{item.icon}</div>
+                <div className="flex-shrink-0" style={{ color: '#4A6D4B' }}>{item.icon}</div>
                 <div>
-                  <h3 className="font-display text-xl text-white uppercase tracking-wider mb-1">
+                  <h3 className="font-display text-lg uppercase tracking-wider mb-1" style={{ color: '#2C402E' }}>
                     {item.title}
                   </h3>
-                  <p className="font-body text-sm text-gray-accent leading-relaxed">
+                  <p className="font-body text-sm leading-relaxed" style={{ color: '#5A5A5A' }}>
                     {item.desc}
                   </p>
                 </div>
@@ -185,12 +219,16 @@ export default async function HomePage() {
       </section>
 
       {/* WHATSAPP CTA */}
-      <section className="py-20 bg-black-800/30">
+      <section className="py-24" style={{ backgroundColor: '#2C402E' }}>
         <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="section-title mb-4">¿Tenés dudas?</h2>
-          <p className="font-body text-gray-accent mb-8 leading-relaxed max-w-md mx-auto">
+          <h2
+            className="font-display text-4xl md:text-5xl uppercase tracking-wider mb-4 text-white"
+          >
+            ¿Tenés dudas?
+          </h2>
+          <p className="font-body mb-8 leading-relaxed max-w-md mx-auto" style={{ color: '#B4D4B5' }}>
             Escribinos por WhatsApp y te respondemos al toque. Consultá disponibilidad,
-            talles o cualquier duda sobre los productos.
+            variantes o cualquier duda sobre los productos.
           </p>
           <a
             href={getWhatsAppUrl()}

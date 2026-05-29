@@ -15,14 +15,14 @@ export function formatPrice(price: number): string {
 }
 
 export function getWhatsAppUrl(message?: string): string {
-  const phone = '5491125452488'
+  const phone = '541132006717'
   const encodedMessage = message ? encodeURIComponent(message) : ''
   return `https://wa.me/${phone}${encodedMessage ? `?text=${encodedMessage}` : ''}`
 }
 
 export function getProductWhatsAppUrl(productName: string, size?: string): string {
   const message = size
-    ? `Hola! Me interesa ${productName} talle ${size}. ¿Tienen disponibilidad?`
+    ? `Hola! Me interesa ${productName} variante ${size}. ¿Tienen disponibilidad?`
     : `Hola! Me interesa ${productName}. ¿Tienen disponibilidad?`
   return getWhatsAppUrl(message)
 }
@@ -42,7 +42,7 @@ export function getCustomerWhatsAppUrl(customerPhone: string, orderShortId: stri
   // Si ya empieza con 54 lo usamos tal cual, sino lo agregamos
   const phone = digits.startsWith('54') ? digits : `54${digits}`
   const message = encodeURIComponent(
-    `Hola! Te contactamos de El Palomo 1950 por tu pedido #${orderShortId}. ¿Cómo estás?`
+    `Hola! Te contactamos de Ritual Matero por tu pedido #${orderShortId}. ¿Cómo estás?`
   )
   return `https://wa.me/${phone}?text=${message}`
 }

@@ -63,7 +63,7 @@ export default function SeguimientoPage() {
                 value={orderId}
                 onChange={(e) => setOrderId(e.target.value)}
                 placeholder="Ej: #A1B2C3D4"
-                className="w-full bg-black-800 border border-white/10 text-white font-condensed px-4 py-3 focus:outline-none focus:border-red-primary transition-colors focus:bg-black-800 autofill:bg-black-800"
+                className="w-full bg-black-800 border border-white/10 text-white font-condensed px-4 py-3 focus:outline-none focus:border-verde-musgo transition-colors focus:bg-black-800 autofill:bg-black-800"
               />
             </div>
 
@@ -78,7 +78,7 @@ export default function SeguimientoPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="tu@email.com"
-                className="w-full bg-black-800 border border-white/10 text-white font-condensed px-4 py-3 focus:outline-none focus:border-red-primary transition-colors focus:bg-black-800 autofill:bg-black-800"
+                className="w-full bg-black-800 border border-white/10 text-white font-condensed px-4 py-3 focus:outline-none focus:border-verde-musgo transition-colors focus:bg-black-800 autofill:bg-black-800"
               />
             </div>
 
@@ -91,7 +91,7 @@ export default function SeguimientoPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-red-primary text-white font-condensed text-sm uppercase tracking-[0.2em] py-4 hover:bg-red-600 transition-colors disabled:opacity-50"
+              className="w-full bg-verde-profundo text-white font-condensed text-sm uppercase tracking-[0.2em] py-4 hover:bg-verde-musgo transition-colors disabled:opacity-50"
             >
               {isLoading ? 'Buscando...' : 'Buscar Pedido'}
             </button>
@@ -127,7 +127,7 @@ export default function SeguimientoPage() {
                   <div>
                     <p className="font-condensed text-white text-lg">{item.product_name}</p>
                     <p className="font-condensed text-gray-muted text-xs uppercase tracking-wider">
-                      {item.size === 'U' ? 'Talle Único' : `Talle ${item.size}`} x {item.quantity}
+                      {item.size === 'unico' ? 'Variante Única' : `Variante ${item.size}`} x {item.quantity}
                     </p>
                   </div>
                   <p className="font-display text-xl text-white">

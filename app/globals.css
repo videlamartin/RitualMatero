@@ -1,18 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --red-primary: #CC0000;
-  --red-dark: #990000;
-  --black-900: #0A0A0A;
-  --black-800: #111111;
-  --black-700: #1C1C1C;
-  --black-600: #242424;
-  --gray-accent: #9CA3AF;
-  --gray-muted: #6B7280;
+  --verde-profundo: #2C402E;
+  --verde-musgo: #4A6D4B;
+  --verde-claro: #6B8F6C;
+  --cuero: #B4A194;
+  --cuero-claro: #C8B8AC;
+  --hueso: #F7F2E6;
+  --hueso-oscuro: #EDE8DC;
+  --blanco: #FFFFFF;
+  --texto-primario: #1A1A1A;
+  --texto-secundario: #5A5A5A;
+  --texto-suave: #8A8A8A;
+  --borde-suave: #E0D9CC;
 }
 
 @layer base {
@@ -29,14 +33,17 @@
   }
 
   body {
-    background-color: var(--black-900);
-    color: #ffffff;
-    font-family: var(--font-barlow), 'Barlow', sans-serif;
+    background-color: var(--hueso);
+    color: var(--texto-primario);
+    font-family: var(--font-lora), 'Lora', Georgia, serif;
     min-height: 100vh;
+    /* Noise texture sutil para profundidad */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
   }
 
   ::selection {
-    background-color: var(--red-primary);
+    background-color: var(--verde-musgo);
     color: white;
   }
 
@@ -45,112 +52,182 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--black-800);
+    background: var(--hueso-oscuro);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--red-primary);
+    background: var(--cuero);
     border-radius: 3px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--verde-profundo);
   }
 }
 
 @layer components {
+  /* ---- BUTTONS ---- */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2;
-    @apply bg-red-primary text-white;
+    background-color: var(--verde-profundo);
+    color: white;
     @apply font-display tracking-widest uppercase;
-    @apply px-8 py-3 text-sm;
-    @apply transition-all duration-200;
-    @apply hover:bg-red-dark hover:scale-[1.02] active:scale-[0.98];
-    @apply focus:outline-none focus:ring-2 focus:ring-red-primary focus:ring-offset-2 focus:ring-offset-black-900;
+    @apply px-8 py-3 text-sm rounded-sm;
+    @apply transition-all duration-300;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+    focus-ring-color: var(--verde-musgo);
+  }
+  .btn-primary:hover {
+    background-color: var(--verde-musgo);
+    transform: scale(1.01);
+  }
+  .btn-primary:active {
+    transform: scale(0.99);
   }
 
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2;
-    @apply border border-white/20 text-white;
+    border: 1.5px solid var(--verde-profundo);
+    color: var(--verde-profundo);
     @apply font-display tracking-widest uppercase;
-    @apply px-8 py-3 text-sm;
-    @apply transition-all duration-200;
-    @apply hover:border-white/60 hover:bg-white/5;
-    @apply focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-black-900;
+    @apply px-8 py-3 text-sm rounded-sm;
+    @apply transition-all duration-300;
+    @apply focus:outline-none;
+  }
+  .btn-secondary:hover {
+    background-color: var(--verde-profundo);
+    color: white;
   }
 
   .btn-whatsapp {
     @apply inline-flex items-center justify-center gap-3;
     @apply bg-[#25D366] text-white;
     @apply font-display tracking-widest uppercase;
-    @apply px-8 py-3 text-sm;
-    @apply transition-all duration-200;
-    @apply hover:bg-[#1ebe5b] hover:scale-[1.02] active:scale-[0.98];
+    @apply px-8 py-3 text-sm rounded-sm;
+    @apply transition-all duration-300;
+  }
+  .btn-whatsapp:hover {
+    background-color: #1ebe5b;
+    transform: scale(1.01);
   }
 
   .btn-danger {
     @apply inline-flex items-center justify-center gap-2;
-    @apply bg-red-primary/20 text-red-primary border border-red-primary/30;
-    @apply font-condensed tracking-wider uppercase text-sm;
-    @apply px-4 py-2;
+    @apply border text-sm;
+    border-color: #ef4444;
+    color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.1);
+    @apply font-display tracking-wider uppercase;
+    @apply px-4 py-2 rounded-sm;
     @apply transition-all duration-200;
-    @apply hover:bg-red-primary hover:text-white;
+  }
+  .btn-danger:hover {
+    background-color: #ef4444;
+    color: white;
   }
 
+  /* ---- SECTION TITLES ---- */
   .section-title {
-    @apply font-display text-4xl md:text-5xl text-white uppercase tracking-wider;
+    @apply font-display text-4xl md:text-5xl uppercase tracking-wider;
+    color: var(--verde-profundo);
   }
 
+  /* ---- PRODUCT CARD ---- */
   .card-product {
-    @apply relative bg-black-800 overflow-hidden;
-    @apply border border-white/5;
+    @apply relative overflow-hidden rounded-card;
+    background-color: var(--blanco);
+    box-shadow: 0 2px 16px 0 rgba(44, 64, 46, 0.08);
     @apply transition-all duration-300;
-    @apply hover:border-red-primary/30;
+  }
+  .card-product:hover {
+    box-shadow: 0 8px 32px 0 rgba(44, 64, 46, 0.16);
+    transform: translateY(-2px);
   }
 
+  /* ---- BADGES ---- */
   .badge {
-    @apply inline-flex items-center px-2 py-0.5;
-    @apply font-condensed text-xs uppercase tracking-wider;
-    @apply border;
+    @apply inline-flex items-center px-2.5 py-0.5;
+    @apply font-display text-xs uppercase tracking-wider;
+    @apply rounded-sm;
   }
 
-  .badge-red {
-    @apply badge bg-red-primary/20 text-red-primary border-red-primary/30;
+  .badge-featured {
+    @apply badge;
+    background-color: var(--cuero);
+    color: white;
   }
 
   .badge-category {
-    @apply badge bg-black-700 text-gray-accent border-white/10;
+    @apply badge;
+    background-color: var(--hueso-oscuro);
+    color: var(--verde-profundo);
+    border: 1px solid var(--borde-suave);
   }
 
+  /* Legacy alias — mantener compatibilidad */
+  .badge-red {
+    @apply badge-featured;
+  }
+
+  /* ---- FORM FIELDS ---- */
   .input-field {
-    @apply w-full bg-black-700 border border-white/10 text-white;
-    @apply font-body text-sm px-4 py-3;
-    @apply placeholder:text-gray-muted;
-    @apply focus:outline-none focus:border-red-primary focus:ring-1 focus:ring-red-primary/30;
+    @apply w-full border text-sm px-4 py-3 rounded-sm;
+    background-color: var(--blanco);
+    border-color: var(--borde-suave);
+    color: var(--texto-primario);
     @apply transition-colors duration-200;
+    font-family: var(--font-lora), 'Lora', serif;
+  }
+  .input-field::placeholder {
+    color: var(--texto-suave);
+  }
+  .input-field:focus {
+    outline: none;
+    border-color: var(--verde-musgo);
+    box-shadow: 0 0 0 3px rgba(74, 109, 75, 0.12);
   }
 
   .input-error {
-    @apply border-red-500 focus:border-red-500 focus:ring-red-500/30;
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
   }
 
   .label-field {
-    @apply block font-condensed text-xs text-gray-accent uppercase tracking-wider mb-1.5;
+    @apply block text-xs uppercase tracking-wider mb-1.5;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: var(--texto-secundario);
   }
 
+  /* ---- SHIMMER SKELETON ---- */
   .shimmer-bg {
     background: linear-gradient(
       90deg,
-      #1C1C1C 25%,
-      #242424 50%,
-      #1C1C1C 75%
+      var(--hueso-oscuro) 25%,
+      var(--borde-suave) 50%,
+      var(--hueso-oscuro) 75%
     );
     background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
+    animation: shimmer 2s infinite;
   }
 
+  /* ---- ADMIN ---- */
   .admin-card {
-    @apply bg-black-800 border border-white/5 p-6;
+    @apply rounded-card p-6;
+    background-color: var(--blanco);
+    border: 1px solid var(--borde-suave);
+    box-shadow: 0 1px 8px rgba(44, 64, 46, 0.06);
   }
 
   .admin-table-row {
-    @apply border-b border-white/5 hover:bg-white/[0.02] transition-colors;
+    border-bottom: 1px solid var(--borde-suave);
+    @apply transition-colors;
+  }
+  .admin-table-row:hover {
+    background-color: var(--hueso);
   }
 }
 
@@ -172,4 +249,40 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  .font-display {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 700;
+  }
+
+  .font-heading {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 600;
+  }
+
+  .font-body {
+    font-family: var(--font-lora), 'Lora', Georgia, serif;
+  }
+
+  .font-condensed {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+    font-weight: 600;
+  }
+
+  /* Texto verde profundo */
+  .text-verde { color: var(--verde-profundo); }
+  .text-verde-musgo { color: var(--verde-musgo); }
+  .text-cuero { color: var(--cuero); }
+  .text-hueso { color: var(--hueso); }
+
+  /* Backgrounds */
+  .bg-hueso { background-color: var(--hueso); }
+  .bg-hueso-oscuro { background-color: var(--hueso-oscuro); }
+  .bg-verde { background-color: var(--verde-profundo); }
+  .bg-verde-musgo { background-color: var(--verde-musgo); }
+  .bg-cuero { background-color: var(--cuero); }
+
+  /* Bordes */
+  .border-verde { border-color: var(--verde-profundo); }
+  .border-suave { border-color: var(--borde-suave); }
 }

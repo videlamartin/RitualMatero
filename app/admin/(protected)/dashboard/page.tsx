@@ -86,7 +86,7 @@ export default async function AdminDashboard() {
       href: '/admin/ordenes?filter=pendiente',
     },
     {
-      label: 'Talles con stock bajo',
+      label: 'Variantes con stock bajo',
       value: stats.low_stock_count,
       icon: '⚠️',
       color: 'text-red-400',
@@ -128,7 +128,7 @@ export default async function AdminDashboard() {
       {/* Recent Orders */}
       <div className="admin-card">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="font-condensed text-sm text-red-primary uppercase tracking-[0.3em]">
+          <h2 className="font-condensed text-sm text-green-600 uppercase tracking-[0.3em]">
             Últimas órdenes
           </h2>
           <a href="/admin/ordenes" className="font-condensed text-xs text-gray-muted hover:text-white uppercase tracking-wider transition-colors">

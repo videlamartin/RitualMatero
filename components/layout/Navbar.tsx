@@ -2,18 +2,54 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import Image from 'next/image'
+import brandLogo from '@/app/img/logo.jpg'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { useCartStore } from '@/store/cart'
 import { CartIcon } from '@/components/cart/CartIcon'
 
 const NAV_LINKS = [
-  { href: '/catalogo', label: 'Catálogo' },
-  { href: '/catalogo?categoria=camisetas', label: 'Camisetas' },
-  { href: '/catalogo?categoria=buzos', label: 'Buzos' },
+  { href: '/catalogo', label: 'Tienda' },
+  { href: '/catalogo?categoria=mates', label: 'Mates' },
+  { href: '/catalogo?categoria=bombillas', label: 'Bombillas' },
+  { href: '/catalogo?categoria=termos', label: 'Termos' },
+  { href: '/catalogo?categoria=yerbas', label: 'Yerbas' },
   { href: '/catalogo?categoria=accesorios', label: 'Accesorios' },
+  { href: '/catalogo?categoria=combos', label: 'Combos' },
   { href: '/seguimiento', label: 'Mis Pedidos' },
 ]
+
+// SVG logo: ícono de mate + texto "RITUAL MATERO"
+function MateLogo() {
+  return (
+    <Link href="/" className="flex items-center gap-3 group" aria-label="Ritual Matero - Inicio">
+      <Image
+        src={brandLogo}
+        alt="Ritual Matero Logo"
+        width={40}
+        height={40}
+        className="flex-shrink-0 transition-transform duration-300 group-hover:scale-105 rounded-full"
+      />
+
+      {/* Text */}
+      <div className="flex flex-col leading-none">
+        <span
+          className="font-display text-xl uppercase tracking-wider transition-colors duration-200"
+          style={{ color: '#2C402E' }}
+        >
+          RITUAL MATERO
+        </span>
+        <span
+          className="font-condensed text-[9px] uppercase tracking-[0.4em] -mt-0.5"
+          style={{ color: '#4A6D4B' }}
+        >
+          Mates · Bombillas · Termos · Yerbas · Accesorios · Combos
+        </span>
+      </div>
+    </Link>
+  )
+}
 
 export function Navbar() {
   const pathname = usePathname()
@@ -33,40 +69,46 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled ? 'bg-black-900/95 backdrop-blur-md border-b border-white/5' : 'bg-transparent'
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-400 ${
+        scrolled ? 'backdrop-blur-md' : ''
       }`}
+      style={{
+        backgroundColor: scrolled ? 'rgba(247, 242, 230, 0.96)' : 'rgba(247, 242, 230, 0.85)',
+        borderBottom: scrolled ? '1px solid #E0D9CC' : '1px solid transparent',
+      }}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex flex-col leading-none group" aria-label="El Palomo 1950 - Inicio">
-            <span className="font-display text-2xl text-white tracking-wider group-hover:text-red-primary transition-colors">
-              EL PALOMO
-            </span>
-            <span className="font-condensed text-[10px] text-red-primary tracking-[0.4em] uppercase -mt-1">
-              1950 · Independiente
-            </span>
-          </Link>
+          <MateLogo />
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="font-condensed text-sm uppercase tracking-widest text-gray-accent hover:text-white transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const isActive = pathname === link.href || (link.href !== '/catalogo' && pathname.startsWith(link.href.split('?')[0]) && link.href.includes('?') && typeof window !== 'undefined')
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="font-condensed text-sm uppercase tracking-widest transition-colors duration-200"
+                  style={{ color: '#5A5A5A' }}
+                  onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = '#2C402E')}
+                  onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = '#5A5A5A')}
+                >
+                  {link.label}
+                </Link>
+              )
+            })}
           </div>
 
           {/* Actions */}
           <div className="flex items-center gap-3">
             <button
               onClick={openCart}
-              className="relative p-2 text-gray-accent hover:text-white transition-colors"
+              className="relative p-2 transition-colors"
+              style={{ color: '#5A5A5A' }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = '#2C402E')}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = '#5A5A5A')}
               aria-label={`Carrito (${itemCount} items)`}
             >
               <CartIcon />
@@ -75,7 +117,8 @@ export function Navbar() {
                   key={itemCount}
                   initial={{ scale: 0.5 }}
                   animate={{ scale: 1 }}
-                  className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-primary text-white text-[10px] font-bold rounded-full flex items-center justify-center"
+                  className="absolute -top-0.5 -right-0.5 w-4 h-4 text-white text-[10px] font-bold rounded-full flex items-center justify-center"
+                  style={{ backgroundColor: '#2C402E' }}
                 >
                   {itemCount > 9 ? '9+' : itemCount}
                 </motion.span>
@@ -84,7 +127,8 @@ export function Navbar() {
 
             {/* Mobile menu button */}
             <button
-              className="md:hidden p-2 text-gray-accent hover:text-white transition-colors"
+              className="md:hidden p-2 transition-colors"
+              style={{ color: '#5A5A5A' }}
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Menú"
               aria-expanded={menuOpen}
@@ -108,7 +152,11 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-black-900/98 backdrop-blur-md border-b border-white/5"
+            className="md:hidden backdrop-blur-md"
+            style={{
+              backgroundColor: 'rgba(247, 242, 230, 0.98)',
+              borderBottom: '1px solid #E0D9CC',
+            }}
           >
             <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
               {NAV_LINKS.map((link) => (
@@ -116,7 +164,10 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="font-condensed text-sm uppercase tracking-widest text-gray-accent hover:text-white py-3 border-b border-white/5 transition-colors"
+                  className="font-condensed text-sm uppercase tracking-widest py-3 transition-colors"
+                  style={{ color: '#5A5A5A', borderBottom: '1px solid #E0D9CC' }}
+                  onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = '#2C402E')}
+                  onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = '#5A5A5A')}
                 >
                   {link.label}
                 </Link>

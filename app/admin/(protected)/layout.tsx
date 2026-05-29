@@ -21,11 +21,10 @@ export default async function AdminProtectedLayout({
 
   return (
     <div className="min-h-screen bg-black-900">
-      {/* ── MOBILE: Top header ── */}
       <header className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-black-800 border-b border-white/5 flex items-center justify-between px-4 h-14">
         <Link href="/" aria-label="Ir al sitio público">
-          <span className="font-display text-lg text-white tracking-wider">EL PALOMO</span>
-          <span className="font-condensed text-[9px] text-red-primary tracking-[0.3em] uppercase ml-2">Admin</span>
+          <span className="font-display text-lg text-white tracking-wider">RITUAL MATERO</span>
+          <span className="font-condensed text-[9px] text-green-500 tracking-[0.3em] uppercase ml-2">Admin</span>
         </Link>
         <span className="font-condensed text-[10px] text-gray-muted uppercase tracking-wider truncate max-w-[140px]">
           {userEmail}
@@ -36,14 +35,14 @@ export default async function AdminProtectedLayout({
         {/* ── DESKTOP: Sidebar ── */}
         <aside className="hidden lg:flex w-64 bg-black-800/80 backdrop-blur-xl border-r border-white/5 flex-shrink-0 flex-col min-h-screen shadow-2xl relative z-10">
           {/* Subtle gradient glow in sidebar */}
-          <div className="absolute inset-0 bg-gradient-to-b from-red-500/5 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-green-500/5 to-transparent pointer-events-none" />
           
           {/* Logo */}
           <div className="p-6 border-b border-white/5 relative">
             <Link href="/" className="block" aria-label="Ir al sitio público">
-              <span className="font-display text-xl text-white tracking-wider block">EL PALOMO</span>
-              <span className="font-condensed text-[10px] text-red-primary tracking-[0.3em] uppercase">
-                1950 · Admin
+              <span className="font-display text-xl text-white tracking-wider block">RITUAL MATERO</span>
+              <span className="font-condensed text-[10px] text-green-500 tracking-[0.3em] uppercase">
+                Admin
               </span>
             </Link>
           </div>

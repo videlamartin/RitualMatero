@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 
       if (error || !sizeData) {
         return NextResponse.json(
-          { error: `Talle ${item.size} no disponible para "${item.product_name}"` },
+          { error: `Variante ${item.size} no disponible para "${item.product_name}"` },
           { status: 400 }
         )
       }
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
       if (sizeData.stock < item.quantity) {
         return NextResponse.json(
           {
-            error: `Stock insuficiente para "${item.product_name}" talle ${item.size}. Disponible: ${sizeData.stock}`,
+            error: `Stock insuficiente para "${item.product_name}" variante ${item.size}. Disponible: ${sizeData.stock}`,
           },
           { status: 400 }
         )

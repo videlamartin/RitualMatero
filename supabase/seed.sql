@@ -1,244 +1,128 @@
 -- ============================================
--- EL PALOMO 1950 — SEED DATA (12 productos demo)
--- Ejecutar DESPUÉS de schema.sql
+-- RITUAL MATERO — DATOS DEMO (NUEVO)
 -- ============================================
 
--- Insertar productos con IDs fijos para imágenes deterministas
-insert into products (id, name, description, price, category, images, featured) values
+-- Limpiar tablas
+delete from order_items;
+delete from orders;
+delete from product_sizes;
+delete from products;
 
--- CAMISETAS (3)
-(
-  '11111111-0001-0001-0001-000000000001',
-  'Camiseta Titular 2024 Puma',
-  'Camiseta oficial de Independiente temporada 2024. Diseño titular en rojo y blanco. Tecnología DryCell para máxima comodidad. Material: 100% poliéster reciclado.',
-  89999,
-  'camisetas',
-  array[
-    'https://picsum.photos/seed/palomo1a/800/1000',
-    'https://picsum.photos/seed/palomo1b/800/1000'
-  ],
-  true
-),
-(
-  '11111111-0001-0001-0001-000000000002',
-  'Camiseta Alternativa 2024 Puma',
-  'Camiseta alternativa oficial temporada 2024. Color blanco con detalles rojos. Ideal para lucirla en los partidos de visitante.',
-  89999,
-  'camisetas',
-  array[
-    'https://picsum.photos/seed/palomo2a/800/1000',
-    'https://picsum.photos/seed/palomo2b/800/1000'
-  ],
-  true
-),
-(
-  '11111111-0001-0001-0001-000000000003',
-  'Camiseta Tercera Verde 2024 Puma',
-  'Edición especial tercera camiseta 2024. Color verde con escudo bordado. Edición limitada.',
-  89999,
-  'camisetas',
-  array[
-    'https://picsum.photos/seed/palomo3a/800/1000',
-    'https://picsum.photos/seed/palomo3b/800/1000'
-  ],
-  true
-),
+-- ============================================
+-- 1. INSERTAR PRODUCTOS
+-- ============================================
 
--- BUZOS (3)
-(
-  '22222222-0002-0002-0002-000000000004',
-  'Buzo con Capucha Kanji Rojo',
-  'Buzo con capucha de la marca Kanji, colección Independiente. Rojo intenso con escudo bordado en el pecho. Interior de polar suave.',
-  64999,
-  'buzos',
-  array[
-    'https://picsum.photos/seed/palomo4a/800/1000',
-    'https://picsum.photos/seed/palomo4b/800/1000'
-  ],
-  true
-),
-(
-  '22222222-0002-0002-0002-000000000005',
-  'Buzo Rompeviento Kanji Negro',
-  'Rompevientos Kanji edición Independiente. Color negro con logo rojo. Bolsillos laterales con cierre. Ideal para días fríos.',
-  72999,
-  'buzos',
-  array[
-    'https://picsum.photos/seed/palomo5a/800/1000',
-    'https://picsum.photos/seed/palomo5b/800/1000'
-  ],
-  true
-),
-(
-  '22222222-0002-0002-0002-000000000006',
-  'Buzo Training Puma Independiente',
-  'Buzo de entrenamiento oficial Puma. Material deportivo de alta calidad con tecnología de absorción de humedad.',
-  59999,
-  'buzos',
-  array[
-    'https://picsum.photos/seed/palomo6a/800/1000',
-    'https://picsum.photos/seed/palomo6b/800/1000'
-  ],
-  false
-),
+insert into products (id, name, description, price, category, featured, images) values
+-- MATES
+('11111111-0001-0001-0001-000000000001', 'Mate 100% personalizado', 'Personalizado a tu gusto', 15000, 'mates', true, array['https://picsum.photos/seed/rm-mate-1/800/800']),
+('11111111-0001-0001-0001-000000000002', 'Matera ovalada', 'Cuerina reforzada', 20000, 'mates', true, array['https://picsum.photos/seed/rm-matera-1/800/800']),
+('11111111-0001-0001-0001-000000000003', 'Imperial liso', 'Calabaza con virola de alpaca', 40000, 'mates', true, array['https://picsum.photos/seed/rm-mate-imp-1/800/800']),
+('11111111-0001-0001-0001-000000000004', 'Camionero de algarrobo', 'Virola de acero inoxidable', 28000, 'mates', true, array['https://picsum.photos/seed/rm-mate-cam-1/800/800']),
+('11111111-0001-0001-0001-000000000005', 'Torpedo liso', 'Calabaza con virola de acero inoxidable', 38000, 'mates', false, array['https://picsum.photos/seed/rm-mate-tor-1/800/800']),
+('11111111-0001-0001-0001-000000000006', 'Camionero criollo', 'Mate de calabaza con base de cuero', 30000, 'mates', false, array['https://picsum.photos/seed/rm-mate-cri-1/800/800']),
+('11111111-0001-0001-0001-000000000007', 'Imperial de algarrobo con base', 'Virola de acero inoxidable, fleje y base de alpaca', 50000, 'mates', true, array['https://picsum.photos/seed/rm-mate-impalg-1/800/800']),
+('11111111-0001-0001-0001-000000000008', 'Imperial de algarrobo', 'Virola de acero inoxidable y madera laqueada', 35000, 'mates', false, array['https://picsum.photos/seed/rm-mate-impalg-2/800/800']),
 
--- PANTALONES (3)
-(
-  '33333333-0003-0003-0003-000000000007',
-  'Pantalón Training Puma Rojo',
-  'Pantalón de entrenamiento oficial Puma. Cintura elástica con cordón. Bolsillos laterales. Color rojo con logos de Independiente.',
-  44999,
-  'pantalones',
-  array[
-    'https://picsum.photos/seed/palomo7a/800/1000',
-    'https://picsum.photos/seed/palomo7b/800/1000'
-  ],
-  false
-),
-(
-  '33333333-0003-0003-0003-000000000008',
-  'Pantalón Arquero Kanji 2024',
-  'Pantalón largo de arquero Kanji, temporada 2024. Acolchado en rodillas. Negro con detalles rojos. Protección y estilo.',
-  49999,
-  'pantalones',
-  array[
-    'https://picsum.photos/seed/palomo8a/800/1000',
-    'https://picsum.photos/seed/palomo8b/800/1000'
-  ],
-  true
-),
-(
-  '33333333-0003-0003-0003-000000000009',
-  'Pantalón Buzo Kanji Negro',
-  'Pantalón de buzo Kanji con puños. Color negro con escudo de Independiente bordado. Comodidad total para el día a día.',
-  52999,
-  'pantalones',
-  array[
-    'https://picsum.photos/seed/palomo9a/800/1000',
-    'https://picsum.photos/seed/palomo9b/800/1000'
-  ],
-  false
-),
+-- BOMBILLAS
+('22222222-0002-0002-0002-000000000001', 'Bombilla alpaca pico de loro', 'Acabado artesanal en alpaca', 7999, 'bombillas', true, array['https://picsum.photos/seed/rm-bombilla-1/800/800']),
+('22222222-0002-0002-0002-000000000002', 'Bombilla acero filtro espiral', 'Acero inoxidable 316L', 6499, 'bombillas', true, array['https://picsum.photos/seed/rm-bombilla-2/800/800']),
+('22222222-0002-0002-0002-000000000003', 'Bombilla de bambú natural', 'Ecológica y natural', 5999, 'bombillas', false, array['https://picsum.photos/seed/rm-bombilla-3/800/800']),
 
--- ACCESORIOS (3)
-(
-  '44444444-0004-0004-0004-000000000010',
-  'Gorra Kanji Independiente Roja',
-  'Gorra snapback Kanji oficial de Independiente. Bordado del escudo en el frente. Talla única regulable. Color rojo.',
-  24999,
-  'accesorios',
-  array[
-    'https://picsum.photos/seed/palomo10a/800/1000',
-    'https://picsum.photos/seed/palomo10b/800/1000'
-  ],
-  true
-),
-(
-  '44444444-0004-0004-0004-000000000011',
-  'Bufanda Oficial Independiente',
-  'Bufanda oficial de Independiente. Tejido acrílico suave. Colores rojo y blanco con escudo y "El Rojo" bordados. 140cm de largo.',
-  18999,
-  'accesorios',
-  array[
-    'https://picsum.photos/seed/palomo11a/800/1000',
-    'https://picsum.photos/seed/palomo11b/800/1000'
-  ],
-  false
-),
-(
-  '44444444-0004-0004-0004-000000000012',
-  'Medias Puma Independiente',
-  'Medias oficiales Puma de Independiente. Pack x2. Algodón con refuerzo en talón y puntera. Rojo con franjas blancas.',
-  9999,
-  'accesorios',
-  array[
-    'https://picsum.photos/seed/palomo12a/800/1000',
-    'https://picsum.photos/seed/palomo12b/800/1000'
-  ],
-  false
-);
+-- TERMOS
+('33333333-0003-0003-0003-000000000001', 'Termo Stanley Classic 1L', 'Acero inoxidable, mantiene temperatura 24hs', 45000, 'termos', true, array['https://picsum.photos/seed/rm-termo-1/800/800']),
+('33333333-0003-0003-0003-000000000002', 'Termo Cebador 500ml', 'Compacto para llevar a todos lados', 28000, 'termos', true, array['https://picsum.photos/seed/rm-termo-2/800/800']),
+('33333333-0003-0003-0003-000000000003', 'Termo Lumilagro 1.5L', 'Clásico argentino', 22000, 'termos', false, array['https://picsum.photos/seed/rm-termo-3/800/800']),
 
--- Stock por talle para cada producto
--- Camiseta Titular 2024
+-- YERBAS
+('44444444-0004-0004-0004-000000000001', 'Yerba Rosamonte Especial', 'Con palo, corte tradicional', 8999, 'yerbas', true, array['https://picsum.photos/seed/rm-yerba-1/800/800']),
+('44444444-0004-0004-0004-000000000002', 'Yerba Taragüi Sin Palo', 'Suave y pareja', 6499, 'yerbas', false, array['https://picsum.photos/seed/rm-yerba-2/800/800']),
+('44444444-0004-0004-0004-000000000003', 'Yerba Playadito 1kg', 'Con palo, rendidora', 7999, 'yerbas', false, array['https://picsum.photos/seed/rm-yerba-3/800/800']),
+
+-- ACCESORIOS
+('55555555-0005-0005-0005-000000000001', 'Yerbera cerámica artesanal', 'Hecha a mano', 12999, 'accesorios', false, array['https://picsum.photos/seed/rm-acc-1/800/800']),
+('55555555-0005-0005-0005-000000000002', 'Posamate cuero genuino', 'Protege tu mesa', 4999, 'accesorios', false, array['https://picsum.photos/seed/rm-acc-2/800/800']),
+
+-- COMBOS
+('66666666-0006-0006-0006-000000000001', 'Combo Iniciación Matero', 'Mate + bombilla + yerba 500g', 39999, 'combos', true, array['https://picsum.photos/seed/rm-combo-1/800/800']),
+('66666666-0006-0006-0006-000000000002', 'Combo Regalo Premium', 'Mate artesanal + termo + yerba + caja', 89999, 'combos', true, array['https://picsum.photos/seed/rm-combo-2/800/800']);
+
+-- ============================================
+-- 2. INSERTAR STOCK POR VARIANTE
+-- ============================================
+
+-- MATES
+-- Mate 100% personalizado (calabaza) -> natural, curado
 insert into product_sizes (product_id, size, stock) values
-('11111111-0001-0001-0001-000000000001', 'S', 8),
-('11111111-0001-0001-0001-000000000001', 'M', 12),
-('11111111-0001-0001-0001-000000000001', 'L', 10),
-('11111111-0001-0001-0001-000000000001', 'XL', 5);
+('11111111-0001-0001-0001-000000000001', 'natural', 15),
+('11111111-0001-0001-0001-000000000001', 'curado', 5);
 
--- Camiseta Alternativa
+-- Matera ovalada (accesorio camuflado) -> unico
 insert into product_sizes (product_id, size, stock) values
-('11111111-0001-0001-0001-000000000002', 'S', 3),
-('11111111-0001-0001-0001-000000000002', 'M', 9),
-('11111111-0001-0001-0001-000000000002', 'L', 7),
-('11111111-0001-0001-0001-000000000002', 'XL', 4);
+('11111111-0001-0001-0001-000000000002', 'unico', 8);
 
--- Camiseta Tercera Verde
+-- Imperial liso (calabaza) -> natural, curado
 insert into product_sizes (product_id, size, stock) values
-('11111111-0001-0001-0001-000000000003', 'S', 5),
-('11111111-0001-0001-0001-000000000003', 'M', 6),
-('11111111-0001-0001-0001-000000000003', 'L', 3),
-('11111111-0001-0001-0001-000000000003', 'XL', 2);
+('11111111-0001-0001-0001-000000000003', 'natural', 10),
+('11111111-0001-0001-0001-000000000003', 'curado', 2);
 
--- Buzo Capucha Kanji Rojo
+-- Camionero de algarrobo (madera) -> unico
 insert into product_sizes (product_id, size, stock) values
-('22222222-0002-0002-0002-000000000004', 'S', 7),
-('22222222-0002-0002-0002-000000000004', 'M', 11),
-('22222222-0002-0002-0002-000000000004', 'L', 8),
-('22222222-0002-0002-0002-000000000004', 'XL', 6),
-('22222222-0002-0002-0002-000000000004', 'XXL', 3);
+('11111111-0001-0001-0001-000000000004', 'unico', 12);
 
--- Buzo Rompeviento Kanji
+-- Torpedo liso (calabaza) -> natural, curado
 insert into product_sizes (product_id, size, stock) values
-('22222222-0002-0002-0002-000000000005', 'S', 4),
-('22222222-0002-0002-0002-000000000005', 'M', 8),
-('22222222-0002-0002-0002-000000000005', 'L', 9),
-('22222222-0002-0002-0002-000000000005', 'XL', 5);
+('11111111-0001-0001-0001-000000000005', 'natural', 20),
+('11111111-0001-0001-0001-000000000005', 'curado', 6);
 
--- Buzo Training Puma
+-- Camionero criollo (calabaza) -> natural, curado
 insert into product_sizes (product_id, size, stock) values
-('22222222-0002-0002-0002-000000000006', 'S', 6),
-('22222222-0002-0002-0002-000000000006', 'M', 10),
-('22222222-0002-0002-0002-000000000006', 'L', 12),
-('22222222-0002-0002-0002-000000000006', 'XL', 7);
+('11111111-0001-0001-0001-000000000006', 'natural', 14),
+('11111111-0001-0001-0001-000000000006', 'curado', 4);
 
--- Pantalón Training Puma Rojo
+-- Imperial de algarrobo con base (madera) -> unico
 insert into product_sizes (product_id, size, stock) values
-('33333333-0003-0003-0003-000000000007', 'S', 5),
-('33333333-0003-0003-0003-000000000007', 'M', 9),
-('33333333-0003-0003-0003-000000000007', 'L', 8),
-('33333333-0003-0003-0003-000000000007', 'XL', 4);
+('11111111-0001-0001-0001-000000000007', 'unico', 5);
 
--- Pantalón Arquero Kanji
+-- Imperial de algarrobo (madera) -> unico
 insert into product_sizes (product_id, size, stock) values
-('33333333-0003-0003-0003-000000000008', 'S', 3),
-('33333333-0003-0003-0003-000000000008', 'M', 7),
-('33333333-0003-0003-0003-000000000008', 'L', 6),
-('33333333-0003-0003-0003-000000000008', 'XL', 4);
+('11111111-0001-0001-0001-000000000008', 'unico', 9);
 
--- Pantalón Buzo Kanji Negro
+-- BOMBILLAS (unico)
 insert into product_sizes (product_id, size, stock) values
-('33333333-0003-0003-0003-000000000009', 'S', 8),
-('33333333-0003-0003-0003-000000000009', 'M', 11),
-('33333333-0003-0003-0003-000000000009', 'L', 9),
-('33333333-0003-0003-0003-000000000009', 'XL', 6);
+('22222222-0002-0002-0002-000000000001', 'unico', 45),
+('22222222-0002-0002-0002-000000000002', 'unico', 60),
+('22222222-0002-0002-0002-000000000003', 'unico', 15);
 
--- Gorra Kanji
+-- TERMOS
+-- Stanley 1L
 insert into product_sizes (product_id, size, stock) values
-('44444444-0004-0004-0004-000000000010', 'S', 15),
-('44444444-0004-0004-0004-000000000010', 'M', 15),
-('44444444-0004-0004-0004-000000000010', 'L', 15),
-('44444444-0004-0004-0004-000000000010', 'XL', 10);
+('33333333-0003-0003-0003-000000000001', '1l', 10);
+-- Cebador 500ml
+insert into product_sizes (product_id, size, stock) values
+('33333333-0003-0003-0003-000000000002', '500ml', 25);
+-- Lumilagro 1.5L
+insert into product_sizes (product_id, size, stock) values
+('33333333-0003-0003-0003-000000000003', '1.5l', 30);
 
--- Bufanda
+-- YERBAS
+-- Rosamonte (500g, 1kg)
 insert into product_sizes (product_id, size, stock) values
-('44444444-0004-0004-0004-000000000011', 'S', 20),
-('44444444-0004-0004-0004-000000000011', 'M', 20),
-('44444444-0004-0004-0004-000000000011', 'L', 15);
+('44444444-0004-0004-0004-000000000001', '500g', 50),
+('44444444-0004-0004-0004-000000000001', '1kg', 40);
+-- Taragui (500g, 1kg)
+insert into product_sizes (product_id, size, stock) values
+('44444444-0004-0004-0004-000000000002', '500g', 60),
+('44444444-0004-0004-0004-000000000002', '1kg', 35);
+-- Playadito (1kg)
+insert into product_sizes (product_id, size, stock) values
+('44444444-0004-0004-0004-000000000003', '1kg', 80);
 
--- Medias Puma
+-- ACCESORIOS (unico)
 insert into product_sizes (product_id, size, stock) values
-('44444444-0004-0004-0004-000000000012', 'S', 25),
-('44444444-0004-0004-0004-000000000012', 'M', 30),
-('44444444-0004-0004-0004-000000000012', 'L', 25),
-('44444444-0004-0004-0004-000000000012', 'XL', 20);
+('55555555-0005-0005-0005-000000000001', 'unico', 18),
+('55555555-0005-0005-0005-000000000002', 'unico', 35);
+
+-- COMBOS (unico)
+insert into product_sizes (product_id, size, stock) values
+('66666666-0006-0006-0006-000000000001', 'unico', 10),
+('66666666-0006-0006-0006-000000000002', 'unico', 4);

@@ -64,7 +64,7 @@ export function LowStockAlerts({ items }: LowStockAlertsProps) {
                 <p className="font-condensed text-sm text-white uppercase tracking-wide truncate">
                   {item.products?.name || 'Producto Desconocido'}
                 </p>
-                <p className="font-condensed text-xs text-red-400 mt-0.5">Talle: {item.size}</p>
+                <p className="font-condensed text-xs text-red-400 mt-0.5">Variante: {item.size}</p>
               </div>
               <div className="flex items-center gap-3 flex-shrink-0">
                 <Link

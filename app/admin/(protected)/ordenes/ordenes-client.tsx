@@ -114,7 +114,7 @@ export function OrdenesClient({ initialOrders }: OrdenesClientProps) {
             onClick={() => setFilterStatus(s)}
             className={`font-condensed text-xs uppercase tracking-wider px-4 py-2 border transition-colors flex-shrink-0 ${
               filterStatus === s
-                ? 'border-red-primary text-red-primary bg-red-primary/10'
+                ? 'border-green-600 text-green-600 bg-green-600/10'
                 : 'border-white/10 text-gray-muted hover:border-white/30 hover:text-white'
             }`}
           >
@@ -304,7 +304,7 @@ function OrderDetailModal({ order, isLoading, onClose, onStatusChange, isUpdatin
           <div className="p-6 space-y-6">
             {/* Customer */}
             <div>
-              <h3 className="font-condensed text-xs text-red-primary uppercase tracking-[0.3em] mb-3">Cliente</h3>
+              <h3 className="font-condensed text-xs text-green-500 uppercase tracking-[0.3em] mb-3">Cliente</h3>
               <div className="space-y-1.5">
                 <p className="font-condensed text-sm text-white">{order.customer_name}</p>
                 <p className="font-condensed text-xs text-gray-muted">{order.customer_email}</p>
@@ -318,7 +318,7 @@ function OrderDetailModal({ order, isLoading, onClose, onStatusChange, isUpdatin
             {/* Notes */}
             {order.notes && (
               <div>
-                <h3 className="font-condensed text-xs text-red-primary uppercase tracking-[0.3em] mb-2">Nota del cliente</h3>
+                <h3 className="font-condensed text-xs text-green-500 uppercase tracking-[0.3em] mb-2">Nota del cliente</h3>
                 <div className="bg-white/5 border border-white/10 p-3">
                   <p className="font-condensed text-xs text-gray-accent whitespace-pre-wrap italic">"{order.notes}"</p>
                 </div>
@@ -327,13 +327,13 @@ function OrderDetailModal({ order, isLoading, onClose, onStatusChange, isUpdatin
 
             {/* Items */}
             <div>
-              <h3 className="font-condensed text-xs text-red-primary uppercase tracking-[0.3em] mb-3">Productos</h3>
+              <h3 className="font-condensed text-xs text-green-500 uppercase tracking-[0.3em] mb-3">Productos</h3>
               <div className="space-y-2">
                 {order.order_items?.map((item: OrderItem) => (
                   <div key={item.id} className="flex justify-between">
                     <div>
                       <span className="font-condensed text-sm text-white">{item.product_name}</span>
-                      <span className="font-condensed text-xs text-gray-muted ml-2">T. {item.size} × {item.quantity}</span>
+                      <span className="font-condensed text-xs text-gray-muted ml-2">Var. {item.size} × {item.quantity}</span>
                     </div>
                     <span className="font-display text-base text-white">{formatPrice(item.unit_price * item.quantity)}</span>
                   </div>
@@ -347,7 +347,7 @@ function OrderDetailModal({ order, isLoading, onClose, onStatusChange, isUpdatin
 
             {/* Status change */}
             <div>
-              <h3 className="font-condensed text-xs text-red-primary uppercase tracking-[0.3em] mb-3">
+              <h3 className="font-condensed text-xs text-green-500 uppercase tracking-[0.3em] mb-3">
                 Cambiar estado
               </h3>
               <div className="flex flex-wrap gap-2">

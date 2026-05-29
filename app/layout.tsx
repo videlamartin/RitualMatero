@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Bebas_Neue, Barlow_Condensed, Barlow } from 'next/font/google'
+import { Montserrat, Lora } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
 import { Navbar } from '@/components/layout/Navbar'
@@ -7,51 +7,46 @@ import { Footer } from '@/components/layout/Footer'
 import { CartDrawer } from '@/components/cart/CartDrawer'
 import { Analytics } from '@vercel/analytics/next'
 
-const bebasNeue = Bebas_Neue({
-  weight: '400',
+const montserrat = Montserrat({
+  weight: ['400', '500', '600', '700', '800'],
   subsets: ['latin'],
-  variable: '--font-bebas',
+  variable: '--font-montserrat',
   display: 'swap',
 })
 
-const barlowCondensed = Barlow_Condensed({
-  weight: ['300', '400', '500', '600', '700'],
+const lora = Lora({
+  weight: ['400', '500', '600'],
+  style: ['normal', 'italic'],
   subsets: ['latin'],
-  variable: '--font-barlow-condensed',
-  display: 'swap',
-})
-
-const barlow = Barlow({
-  weight: ['300', '400', '500', '600'],
-  subsets: ['latin'],
-  variable: '--font-barlow',
+  variable: '--font-lora',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
   title: {
-    default: 'El Palomo 1950 | Indumentaria Oficial Independiente',
-    template: '%s | El Palomo 1950',
+    default: 'Ritual Matero | Mates, Yerbas y Accesorios Artesanales',
+    template: '%s | Ritual Matero',
   },
   description:
-    'Tienda oficial de indumentaria del Club Atlético Independiente. Camisetas, buzos, pantalones y accesorios Puma y Kanji. Pago al recibir. Envíos a todo el país.',
+    'Mates artesanales, yerbas y accesorios. Envíos a todo el país.',
   keywords: [
-    'Independiente',
-    'Club Atlético Independiente',
-    'camiseta Independiente',
-    'indumentaria Independiente',
-    'Puma Independiente',
-    'Kanji Independiente',
-    'El Palomo 1950',
-    'ropa oficial Independiente',
+    'mate artesanal',
+    'yerba mate',
+    'bombilla',
+    'accesorios materos',
+    'kit matero',
+    'ritual matero',
+    'tienda mate argentina',
+    'mate calabaza',
+    'mate madera',
   ],
-  authors: [{ name: 'El Palomo 1950' }],
+  authors: [{ name: 'Ritual Matero' }],
   openGraph: {
     type: 'website',
     locale: 'es_AR',
-    siteName: 'El Palomo 1950',
-    title: 'El Palomo 1950 | Indumentaria Oficial Independiente',
-    description: 'La mejor ropa del Rojo. Pago al recibir. Envíos a todo el país.',
+    siteName: 'Ritual Matero',
+    title: 'Ritual Matero | Mates, Yerbas y Accesorios Artesanales',
+    description: 'El ritual de cada día. Mates, yerbas y accesorios para quienes saben disfrutar el momento.',
   },
 }
 
@@ -63,9 +58,9 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${bebasNeue.variable} ${barlowCondensed.variable} ${barlow.variable}`}
+      className={`${montserrat.variable} ${lora.variable}`}
     >
-      <body className="bg-black-900 text-white min-h-screen flex flex-col">
+      <body className="min-h-screen flex flex-col" style={{ backgroundColor: '#F7F2E6', color: '#1A1A1A' }}>
         <Providers>
           <Navbar />
           <CartDrawer />

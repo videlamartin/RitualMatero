@@ -249,20 +249,22 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
     name: product?.name ?? '',
     description: product?.description ?? '',
     price: product?.price?.toString() ?? '',
-    category: product?.category ?? 'camisetas' as ProductCategory,
+    category: product?.category ?? 'mates' as ProductCategory,
     featured: product?.featured ?? false,
     images: product?.images?.join('\n') ?? '',
   })
 
   const [hasSizes, setHasSizes] = useState<boolean>(() => {
     if (product) {
-      return !product.product_sizes?.some(ps => ps.size === 'U')
+      return !product.product_sizes?.some(ps => ps.size === 'unico')
     }
     return true
   })
 
+  const VARIANT_OPTIONS = ['natural', 'curado', '250g', '500g', '1kg']
+
   const [sizes, setSizes] = useState<Record<string, number>>(() => {
-    const initial: Record<string, number> = { XS: 0, S: 0, M: 0, L: 0, XL: 0, XXL: 0, U: 0 }
+    const initial: Record<string, number> = { natural: 0, curado: 0, '250g': 0, '500g': 0, '1kg': 0, unico: 0 }
     if (product?.product_sizes) {
       product.product_sizes.forEach(ps => {
         initial[ps.size] = ps.stock
@@ -286,8 +288,8 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
         featured: form.featured,
         images: form.images.split('\n').map((l) => l.trim()).filter(Boolean),
         sizes: hasSizes 
-          ? Object.entries(sizes).filter(([size]) => size !== 'U').map(([size, stock]) => ({ size, stock }))
-          : [{ size: 'U', stock: sizes['U'] || 0 }]
+          ? Object.entries(sizes).filter(([size]) => size !== 'unico').map(([size, stock]) => ({ size, stock }))
+          : [{ size: 'unico', stock: sizes['unico'] || 0 }]
       }
 
       await upsertProduct(data)
@@ -382,28 +384,28 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
             <input
               type="checkbox"
               id="hasSizes"
-              className="w-4 h-4 accent-red-500 bg-transparent border border-white/20"
+              className="w-4 h-4 accent-green-700 bg-transparent border border-white/20"
               checked={hasSizes}
               onChange={(e) => setHasSizes(e.target.checked)}
             />
             <label htmlFor="hasSizes" className="font-condensed text-sm text-gray-accent uppercase tracking-widest cursor-pointer select-none">
-              El producto tiene varios talles (XS a XXL)
+              El producto tiene múltiples variantes (mates, yerbas, etc.)
             </label>
           </div>
 
           <div>
             {hasSizes ? (
               <>
-                <label className="label-field mb-2 block">Stock por talle</label>
+                <label className="label-field mb-2 block">Stock por variante</label>
                 <div className="grid grid-cols-3 gap-3">
-                  {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
+                  {VARIANT_OPTIONS.map((size) => (
                     <div key={size} className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-2">
-                      <span className="font-display text-sm text-white w-8">{size}</span>
+                      <span className="font-display text-sm text-white w-10 uppercase">{size}</span>
                       <input
                         type="number"
                         min="0"
-                        className="w-full bg-transparent border-b border-white/20 text-white font-condensed text-center focus:outline-none focus:border-red-primary"
-                        value={sizes[size]}
+                        className="w-full bg-transparent border-b border-white/20 text-white font-condensed text-center focus:outline-none"
+                        value={sizes[size] ?? 0}
                         onChange={(e) => setSizes({ ...sizes, [size]: parseInt(e.target.value) || 0 })}
                       />
                     </div>
@@ -412,15 +414,15 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
               </>
             ) : (
               <>
-                <label className="label-field mb-2 block">Stock Disponible (Talle Único)</label>
+                <label className="label-field mb-2 block">Stock disponible (Variante única)</label>
                 <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-2 w-full sm:w-1/2">
-                  <span className="font-display text-sm text-white w-8">U</span>
+                  <span className="font-display text-sm text-white w-12 uppercase">Único</span>
                   <input
                     type="number"
                     min="0"
-                    className="w-full bg-transparent border-b border-white/20 text-white font-condensed text-center focus:outline-none focus:border-red-primary"
-                    value={sizes['U']}
-                    onChange={(e) => setSizes({ ...sizes, U: parseInt(e.target.value) || 0 })}
+                    className="w-full bg-transparent border-b border-white/20 text-white font-condensed text-center focus:outline-none"
+                    value={sizes['unico'] ?? 0}
+                    onChange={(e) => setSizes({ ...sizes, unico: parseInt(e.target.value) || 0 })}
                   />
                 </div>
               </>
@@ -433,7 +435,7 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
               id="featured-check"
               checked={form.featured}
               onChange={(e) => setForm({ ...form, featured: e.target.checked })}
-              className="w-4 h-4 accent-red-500"
+              className="w-4 h-4 accent-green-700"
             />
             <label htmlFor="featured-check" className="font-condensed text-sm text-gray-accent uppercase tracking-wider">
               Producto destacado

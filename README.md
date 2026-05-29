@@ -1,7 +1,7 @@
-# El Palomo 1950 — E-Commerce Oficial Independiente
+# Ritual Matero — E-Commerce
 
-Tienda online de indumentaria oficial del Club Atlético Independiente.  
-**Puma · Kanji · Pago al recibir · Envíos a todo el país**
+Tienda online de mates, yerbas y accesorios artesanales.
+**Productos seleccionados · Pago al recibir · Envíos a todo el país**
 
 ---
 
@@ -34,7 +34,7 @@ Tienda online de indumentaria oficial del Club Atlético Independiente.
 ### 1. Crear el proyecto Supabase
 
 1. Ir a [supabase.com](https://supabase.com) → **New Project**
-2. Elegir nombre: `el-palomo-1950`
+2. Elegir nombre: `ritual-matero`
 3. Región: **South America (São Paulo)**
 4. Guardar la contraseña (no se puede recuperar)
 
@@ -61,7 +61,7 @@ En el panel de Supabase → **Settings** → **API**:
 ### 5. Crear el usuario admin
 
 En Supabase → **Authentication** → **Users** → **Add User**:
-- Email: `admin@elpalomo.com` (o el que prefieras)
+- Email: `admin@ritualmatero.com` (o el que prefieras)
 - Password: (tu contraseña segura)
 
 ---
@@ -97,7 +97,7 @@ La app abre en **http://localhost:3000**
 ## Estructura del Proyecto
 
 ```
-Palomo/
+RitualMatero/
 ├── app/
 │   ├── layout.tsx              # Root layout (fuentes, providers, navbar, footer)
 │   ├── page.tsx                # Home
@@ -200,13 +200,8 @@ Para cambiarlo: editar `lib/utils.ts` → función `getWhatsAppUrl()`
 
 | Color | Hex | Uso |
 |-------|-----|-----|
-| Rojo Independiente | `#CC0000` | CTAs, acentos, hover |
-| Rojo oscuro | `#990000` | Hover de botones |
-| Negro profundo | `#0A0A0A` | Background principal |
-| Negro medio | `#111111` | Cards, inputs |
-| Negro claro | `#1C1C1C` | Borders, elementos |
-
-## Tipografías
+| Verde Musgo | `#4A6D4B` | CTAs, acentos, hover |
+| Verde Profundo | `#2C402E` | Hover de botones |
 
 | Fuente | Uso |
 |--------|-----|
@@ -216,4 +211,4 @@ Para cambiarlo: editar `lib/utils.ts` → función `getWhatsAppUrl()`
 
 ---
 
-*El Palomo 1950 — La mejor ropa del Rojo 🔴*
+*Ritual Matero — El ritual de cada día 🧉*

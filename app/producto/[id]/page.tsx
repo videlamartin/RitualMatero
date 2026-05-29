@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     title: product.name,
     description:
       product.description ??
-      `${product.name} — Indumentaria oficial de Independiente. Pago al recibir.`,
+      `${product.name} — Mates y accesorios artesanales. Pago al recibir.`,
     openGraph: {
       images: product.images[0] ? [product.images[0]] : [],
     },

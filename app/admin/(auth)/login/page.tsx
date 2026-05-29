@@ -49,11 +49,11 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen bg-black-900 flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
-        {/* Logo */}
-        <div className="text-center mb-10">
-          <span className="font-display text-4xl text-white tracking-wider block">EL PALOMO</span>
-          <span className="font-condensed text-[11px] text-red-primary tracking-[0.4em] uppercase">
-            1950 · Panel Admin
+        <div className="mb-10 lg:mb-12">
+          <div className="w-12 h-1 bg-green-500 mb-6" />
+          <h1 className="font-display text-4xl text-white tracking-wider block">RITUAL MATERO</h1>
+          <span className="font-condensed text-[11px] text-green-500 tracking-[0.4em] uppercase">
+            Panel de Administración
           </span>
         </div>
 
@@ -66,7 +66,7 @@ export default function AdminLoginPage() {
               autoComplete="email"
               {...register('email')}
               className={`input-field ${errors.email ? 'input-error' : ''}`}
-              placeholder="admin@elpalomo.com"
+              placeholder="admin@ritualmatero.com"
             />
             {errors.email && (
               <p className="mt-1 font-condensed text-xs text-red-400">{errors.email.message}</p>

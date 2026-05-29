@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { CartItem, CartState, ProductSize } from '@/types'
+import type { CartItem, CartState, ProductVariant } from '@/types'
 
 export const useCartStore = create<CartState>()(
   persist(
@@ -27,7 +27,7 @@ export const useCartStore = create<CartState>()(
         })
       },
 
-      removeItem: (product_id: string, size: ProductSize) => {
+      removeItem: (product_id: string, size: ProductVariant) => {
         set((state) => ({
           items: state.items.filter(
             (item) => !(item.product_id === product_id && item.size === size)
@@ -35,7 +35,7 @@ export const useCartStore = create<CartState>()(
         }))
       },
 
-      updateQuantity: (product_id: string, size: ProductSize, quantity: number) => {
+      updateQuantity: (product_id: string, size: ProductVariant, quantity: number) => {
         if (quantity <= 0) {
           get().removeItem(product_id, size)
           return
@@ -70,7 +70,7 @@ export const useCartStore = create<CartState>()(
       },
     }),
     {
-      name: 'palomo-cart',
+      name: 'ritual-matero-cart',
       partialize: (state) => ({ items: state.items }),
     }
   )

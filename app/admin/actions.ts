@@ -130,7 +130,7 @@ export async function upsertProduct(data: ProductData) {
     productId = newProduct.id
   }
 
-  // Actualizar talles
+  // Actualizar variantes
   if (sizes && sizes.length > 0) {
     const sizesToUpsert = sizes.map(s => ({
       product_id: productId,
@@ -141,7 +141,7 @@ export async function upsertProduct(data: ProductData) {
     const { error: sizesError } = await supabase.from('product_sizes').upsert(sizesToUpsert, { onConflict: 'product_id, size' })
     if (sizesError) {
       console.error('Error upserting sizes:', sizesError)
-      throw new Error('Error al guardar el stock de los talles')
+      throw new Error('Error al guardar el stock de las variantes')
     }
   }
 

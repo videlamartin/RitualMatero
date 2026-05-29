@@ -5,7 +5,7 @@ import { CATEGORY_LABELS } from '@/types'
 interface BadgeProps {
   children: React.ReactNode
   className?: string
-  variant?: 'red' | 'category' | 'status'
+  variant?: 'featured' | 'category' | 'status' | 'red'
 }
 
 export function Badge({ children, className, variant = 'category' }: BadgeProps) {
@@ -13,7 +13,7 @@ export function Badge({ children, className, variant = 'category' }: BadgeProps)
     <span
       className={cn(
         'badge',
-        variant === 'red' && 'badge-red',
+        (variant === 'featured' || variant === 'red') && 'badge-featured',
         variant === 'category' && 'badge-category',
         className
       )}

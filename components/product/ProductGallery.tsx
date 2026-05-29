@@ -10,7 +10,7 @@ interface ProductGalleryProps {
 
 export function ProductGallery({ images, productName }: ProductGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState(0)
-  const displayImages = images.length > 0 ? images : [`https://picsum.photos/seed/palomo/800/1000`]
+  const displayImages = images.length > 0 ? images : [`https://picsum.photos/seed/mate/800/1000`]
 
   return (
     <div className="flex flex-col-reverse md:flex-row gap-4">

@@ -48,11 +48,11 @@ export default async function ConfirmationPage({ params }: ConfirmationPageProps
           </div>
 
           <div className="flex items-center gap-3 justify-center mb-3">
-            <div className="w-8 h-px bg-red-primary" />
-            <span className="font-condensed text-xs text-red-primary tracking-[0.4em] uppercase">
+            <div className="w-8 h-px bg-verde-profundo" />
+            <span className="font-condensed text-xs text-verde-profundo tracking-[0.4em] uppercase">
               ¡Pedido recibido!
             </span>
-            <div className="w-8 h-px bg-red-primary" />
+            <div className="w-8 h-px bg-verde-profundo" />
           </div>
 
           <h1 className="font-display text-4xl md:text-6xl text-white uppercase mb-2">
@@ -63,7 +63,7 @@ export default async function ConfirmationPage({ params }: ConfirmationPageProps
             <span className="font-condensed text-xs text-gray-muted uppercase tracking-widest block">
               Número de pedido
             </span>
-            <span className="font-display text-3xl text-red-primary tracking-widest">
+            <span className="font-display text-3xl text-verde-profundo tracking-widest">
               #{shortId}
             </span>
           </div>
@@ -71,7 +71,7 @@ export default async function ConfirmationPage({ params }: ConfirmationPageProps
 
         {/* Order details */}
         <div className="admin-card mb-6">
-          <h2 className="font-condensed text-xs text-red-primary uppercase tracking-[0.3em] mb-5">
+          <h2 className="font-condensed text-xs text-verde-profundo uppercase tracking-[0.3em] mb-5">
             Tu pedido
           </h2>
 
@@ -80,7 +80,7 @@ export default async function ConfirmationPage({ params }: ConfirmationPageProps
               <div key={item.id} className="flex justify-between items-start">
                 <div>
                   <p className="font-condensed text-sm text-white uppercase tracking-wide">{item.product_name}</p>
-                  <p className="font-condensed text-xs text-gray-muted uppercase">{item.size === 'U' ? 'Talle Único' : `Talle ${item.size}`} × {item.quantity}</p>
+                  <p className="font-condensed text-xs text-gray-muted uppercase">{item.size === 'unico' ? 'Variante Única' : `Variante ${item.size}`} × {item.quantity}</p>
                 </div>
                 <p className="font-display text-lg text-white">{formatPrice(item.unit_price * item.quantity)}</p>
               </div>
@@ -95,7 +95,7 @@ export default async function ConfirmationPage({ params }: ConfirmationPageProps
 
         {/* Delivery info */}
         <div className="admin-card mb-6">
-          <h2 className="font-condensed text-xs text-red-primary uppercase tracking-[0.3em] mb-4">
+          <h2 className="font-condensed text-xs text-verde-profundo uppercase tracking-[0.3em] mb-4">
             Datos de entrega
           </h2>
           <div className="space-y-2">
@@ -116,7 +116,7 @@ export default async function ConfirmationPage({ params }: ConfirmationPageProps
 
         {/* Next steps */}
         <div className="p-6 bg-black-700 border border-white/5 mb-8">
-          <h2 className="font-condensed text-xs text-red-primary uppercase tracking-[0.3em] mb-4">
+          <h2 className="font-condensed text-xs text-verde-profundo uppercase tracking-[0.3em] mb-4">
             ¿Qué sigue?
           </h2>
           <p className="font-body text-sm text-gray-accent leading-relaxed">

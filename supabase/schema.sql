@@ -1,11 +1,11 @@
 -- ============================================
--- EL PALOMO 1950 — SUPABASE SCHEMA
+-- RITUAL MATERO — SUPABASE SCHEMA
 -- Ejecutar en: Supabase Dashboard → SQL Editor
 -- ============================================
 
 -- 1. ENUMS
-create type product_category as enum ('camisetas', 'buzos', 'pantalones', 'accesorios');
-create type product_size as enum ('XS', 'S', 'M', 'L', 'XL', 'XXL');
+create type product_category as enum ('mates', 'bombillas', 'termos', 'yerbas', 'accesorios', 'combos');
+create type product_variant as enum ('unico', 'natural', 'curado', '250g', '500g', '1kg', '500ml', '1l', '1.5l');
 create type order_status as enum ('pendiente', 'preparando', 'enviado', 'entregado', 'cancelado');
 
 -- 2. PRODUCTS
@@ -20,11 +20,11 @@ create table products (
   created_at timestamptz default now()
 );
 
--- 3. PRODUCT SIZES (stock por talle)
+-- 3. PRODUCT VARIANTS (stock por variante)
 create table product_sizes (
   id uuid default gen_random_uuid() primary key,
   product_id uuid references products(id) on delete cascade not null,
-  size product_size not null,
+  size product_variant not null,
   stock integer not null default 0 check (stock >= 0),
   unique(product_id, size)
 );
@@ -50,7 +50,7 @@ create table order_items (
   order_id uuid references orders(id) on delete cascade not null,
   product_id uuid references products(id) on delete set null,
   product_name text not null,
-  size product_size not null,
+  size product_variant not null,
   quantity integer not null check (quantity > 0),
   unit_price numeric(10,2) not null check (unit_price >= 0)
 );
@@ -58,7 +58,7 @@ create table order_items (
 -- 6. STORED PROCEDURE: decrement stock
 create or replace function decrement_stock(
   p_product_id uuid,
-  p_size product_size,
+  p_size product_variant,
   p_quantity integer
 ) returns void as $$
 begin
@@ -69,7 +69,7 @@ begin
     and stock >= p_quantity;
 
   if not found then
-    raise exception 'Stock insuficiente para el producto % talle %', p_product_id, p_size;
+    raise exception 'Stock insuficiente para el producto % variante %', p_product_id, p_size;
   end if;
 end;
 $$ language plpgsql security definer;
@@ -97,11 +97,11 @@ create policy "Productos: escritura solo admin"
   using (auth.role() = 'authenticated')
   with check (auth.role() = 'authenticated');
 
--- Product sizes: lectura pública
-create policy "Product sizes: lectura pública"
+-- Product variants: lectura pública
+create policy "Product variants: lectura pública"
   on product_sizes for select using (true);
 
-create policy "Product sizes: escritura solo admin"
+create policy "Product variants: escritura solo admin"
   on product_sizes for all
   using (auth.role() = 'authenticated')
   with check (auth.role() = 'authenticated');

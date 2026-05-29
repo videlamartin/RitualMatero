@@ -8,7 +8,7 @@ import { ProductGallery } from '@/components/product/ProductGallery'
 import { SizeSelector } from '@/components/product/SizeSelector'
 import { CategoryBadge } from '@/components/ui/Badge'
 import { formatPrice, getProductWhatsAppUrl } from '@/lib/utils'
-import type { Product, ProductSize } from '@/types'
+import type { Product, ProductVariant } from '@/types'
 
 interface ProductDetailClientProps {
   product: Product
@@ -16,25 +16,25 @@ interface ProductDetailClientProps {
 
 export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const sizes = product.product_sizes ?? []
-  const isOneSize = sizes.length === 1 && sizes[0].size === 'U'
+  const isOneSize = sizes.length === 1 && sizes[0].size === 'unico'
 
-  const [selectedSize, setSelectedSize] = useState<ProductSize | null>(() => {
-    return isOneSize ? 'U' : null
+  const [selectedSize, setSelectedSize] = useState<ProductVariant | null>(() => {
+    return isOneSize ? 'unico' : null
   })
   const [added, setAdded] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const { addItem, openCart } = useCartStore()
-  const primaryImage = product.images[0] ?? `https://picsum.photos/seed/palomo${product.id}/800/1000`
+  const primaryImage = product.images[0] ?? `https://picsum.photos/seed/mate${product.id}/800/1000`
 
   const handleAddToCart = () => {
     if (!selectedSize) {
-      setError('Seleccioná un talle')
+      setError('Seleccioná una variante')
       return
     }
 
     const sizeData = sizes.find((s) => s.size === selectedSize)
     if (!sizeData || sizeData.stock === 0) {
-      setError('Sin stock para el talle seleccionado')
+      setError('Sin stock para la variante seleccionada')
       return
     }
 
@@ -75,8 +75,8 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
             product.images.length > 0
               ? product.images
               : [
-                  `https://picsum.photos/seed/palomo${product.id}/800/1000`,
-                  `https://picsum.photos/seed/palomo${product.id}b/800/1000`,
+                  `https://picsum.photos/seed/mate${product.id}/800/1000`,
+                  `https://picsum.photos/seed/mate${product.id}b/800/1000`,
                 ]
           }
           productName={product.name}
@@ -112,7 +112,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
         {/* Description */}
         {product.description && (
-          <p className="font-body text-sm text-gray-accent leading-relaxed border-l-2 border-red-primary/30 pl-4">
+          <p className="font-body text-sm text-gray-accent leading-relaxed border-l-2 border-verde-profundo/30 pl-4">
             {product.description}
           </p>
         )}
