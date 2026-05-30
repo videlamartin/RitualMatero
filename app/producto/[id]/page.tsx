@@ -63,18 +63,18 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const related = await getRelatedProducts(product.category, product.id)
 
   return (
-    <div className="min-h-screen bg-black-900 pt-24 pb-20">
+    <div className="min-h-screen pt-24 pb-20" style={{ backgroundColor: '#F7F2E6' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ProductDetailClient product={product} />
 
         {/* Related Products */}
         {related.length > 0 && (
-          <section className="mt-20 pt-12 border-t border-white/5">
+          <section className="mt-20 pt-12 border-t border-borde-suave">
             <div className="flex items-center gap-4 mb-10">
-              <h2 className="font-display text-3xl text-white uppercase tracking-wider">
+              <h2 className="font-display text-3xl text-verde-profundo uppercase tracking-wider">
                 También te puede interesar
               </h2>
-              <div className="flex-1 h-px bg-white/5" />
+              <div className="flex-1 h-px bg-borde-suave" />
             </div>
             <ProductGrid products={related} columns={4} />
           </section>

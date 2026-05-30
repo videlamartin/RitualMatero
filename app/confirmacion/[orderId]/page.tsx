@@ -37,7 +37,7 @@ export default async function ConfirmationPage({ params }: ConfirmationPageProps
   const shortId = params.orderId.slice(0, 8).toUpperCase()
 
   return (
-    <div className="min-h-screen bg-black-900 pt-24 pb-20">
+    <div className="min-h-screen pt-24 pb-20" style={{ backgroundColor: '#F7F2E6' }}>
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Success icon */}
         <div className="text-center mb-10">
@@ -55,11 +55,11 @@ export default async function ConfirmationPage({ params }: ConfirmationPageProps
             <div className="w-8 h-px bg-verde-profundo" />
           </div>
 
-          <h1 className="font-display text-4xl md:text-6xl text-white uppercase mb-2">
+          <h1 className="font-display text-4xl md:text-6xl text-verde-profundo uppercase mb-2">
             ¡Listo, {order.customer_name.split(' ')[0]}!
           </h1>
 
-          <div className="mt-4 inline-block px-6 py-3 bg-black-700 border border-white/10">
+          <div className="mt-4 inline-block px-6 py-3 bg-white border border-borde-suave shadow-sm rounded-sm">
             <span className="font-condensed text-xs text-gray-muted uppercase tracking-widest block">
               Número de pedido
             </span>
@@ -79,17 +79,17 @@ export default async function ConfirmationPage({ params }: ConfirmationPageProps
             {order.order_items?.map((item) => (
               <div key={item.id} className="flex justify-between items-start">
                 <div>
-                  <p className="font-condensed text-sm text-white uppercase tracking-wide">{item.product_name}</p>
-                  <p className="font-condensed text-xs text-gray-muted uppercase">{item.size === 'unico' ? 'Variante Única' : `Variante ${item.size}`} × {item.quantity}</p>
+                  <p className="font-condensed text-sm text-texto-primario uppercase tracking-wide">{item.product_name}</p>
+                  <p className="font-condensed text-xs text-texto-secundario uppercase">{item.size === 'unico' ? 'Variante Única' : `Variante ${item.size}`} × {item.quantity}</p>
                 </div>
-                <p className="font-display text-lg text-white">{formatPrice(item.unit_price * item.quantity)}</p>
+                <p className="font-display text-lg text-verde-profundo">{formatPrice(item.unit_price * item.quantity)}</p>
               </div>
             ))}
           </div>
 
-          <div className="border-t border-white/10 pt-4 flex justify-between">
-            <span className="font-condensed text-sm uppercase tracking-wider text-gray-accent">Total</span>
-            <span className="font-display text-2xl text-white">{formatPrice(order.total)}</span>
+          <div className="border-t border-borde-suave pt-4 flex justify-between">
+            <span className="font-condensed text-sm uppercase tracking-wider text-texto-secundario">Total</span>
+            <span className="font-display text-2xl text-verde-profundo">{formatPrice(order.total)}</span>
           </div>
         </div>
 
@@ -100,28 +100,28 @@ export default async function ConfirmationPage({ params }: ConfirmationPageProps
           </h2>
           <div className="space-y-2">
             <div className="flex gap-3">
-              <span className="font-condensed text-xs text-gray-muted uppercase tracking-wider w-24">Dirección</span>
-              <span className="font-condensed text-xs text-white">{order.shipping_address}</span>
+              <span className="font-condensed text-xs text-texto-secundario uppercase tracking-wider w-24">Dirección</span>
+              <span className="font-condensed text-xs text-texto-primario">{order.shipping_address}</span>
             </div>
             <div className="flex gap-3">
-              <span className="font-condensed text-xs text-gray-muted uppercase tracking-wider w-24">Ciudad</span>
-              <span className="font-condensed text-xs text-white">{order.shipping_city}, {order.shipping_province}</span>
+              <span className="font-condensed text-xs text-texto-secundario uppercase tracking-wider w-24">Ciudad</span>
+              <span className="font-condensed text-xs text-texto-primario">{order.shipping_city}, {order.shipping_province}</span>
             </div>
             <div className="flex gap-3">
-              <span className="font-condensed text-xs text-gray-muted uppercase tracking-wider w-24">Teléfono</span>
-              <span className="font-condensed text-xs text-white">{order.customer_phone}</span>
+              <span className="font-condensed text-xs text-texto-secundario uppercase tracking-wider w-24">Teléfono</span>
+              <span className="font-condensed text-xs text-texto-primario">{order.customer_phone}</span>
             </div>
           </div>
         </div>
 
         {/* Next steps */}
-        <div className="p-6 bg-black-700 border border-white/5 mb-8">
+        <div className="p-6 bg-white border border-borde-suave shadow-sm mb-8">
           <h2 className="font-condensed text-xs text-verde-profundo uppercase tracking-[0.3em] mb-4">
             ¿Qué sigue?
           </h2>
-          <p className="font-body text-sm text-gray-accent leading-relaxed">
+          <p className="font-body text-sm text-texto-secundario leading-relaxed">
             Nos comunicaremos con vos por WhatsApp al número{' '}
-            <strong className="text-white">{order.customer_phone}</strong> para coordinar la entrega.
+            <strong className="text-texto-primario">{order.customer_phone}</strong> para coordinar la entrega.
             Podes abonar en efectivo al recibir el producto o mediante transferencia bancaria (coordinamos los datos de la transferencia por WhatsApp).
           </p>
         </div>

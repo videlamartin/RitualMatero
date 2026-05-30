@@ -39,11 +39,6 @@ const config: Config = {
           suave: '#EBE5D8',
           DEFAULT: '#D1C9B8',
         },
-        black: {
-          900: '#0A0A0A',
-          800: '#111111',
-          700: '#1C1C1C',
-        },
         gray: {
           muted: '#888888',
           accent: '#A0A0A0',

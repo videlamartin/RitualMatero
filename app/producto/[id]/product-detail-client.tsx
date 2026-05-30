@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { toast } from 'sonner'
 import { useCartStore } from '@/store/cart'
 import { ProductGallery } from '@/components/product/ProductGallery'
 import { SizeSelector } from '@/components/product/SizeSelector'
@@ -61,7 +62,13 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
     setAdded(true)
     setError(null)
-    openCart()
+    
+    toast.success('Agregado al carrito', {
+      action: {
+        label: 'Ver carrito',
+        onClick: () => openCart()
+      }
+    })
 
     setTimeout(() => setAdded(false), 2000)
   }
@@ -88,11 +95,11 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         {/* Breadcrumb */}
         <nav aria-label="Breadcrumb">
           <ol className="flex items-center gap-2 font-condensed text-xs text-gray-muted uppercase tracking-wider">
-            <li><Link href="/" className="hover:text-white transition-colors">Inicio</Link></li>
+            <li><Link href="/" className="hover:text-verde-profundo transition-colors">Inicio</Link></li>
             <li aria-hidden="true">/</li>
-            <li><Link href="/catalogo" className="hover:text-white transition-colors">Catálogo</Link></li>
+            <li><Link href="/catalogo" className="hover:text-verde-profundo transition-colors">Catálogo</Link></li>
             <li aria-hidden="true">/</li>
-            <li><Link href={`/catalogo?categoria=${product.category}`} className="hover:text-white transition-colors">{product.category}</Link></li>
+            <li><Link href={`/catalogo?categoria=${product.category}`} className="hover:text-verde-profundo transition-colors">{product.category}</Link></li>
           </ol>
         </nav>
 
@@ -100,14 +107,14 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         <CategoryBadge category={product.category} />
 
         {/* Name */}
-        <h1 className="font-display text-4xl md:text-5xl text-white uppercase tracking-wider leading-none">
+        <h1 className="font-display text-4xl md:text-5xl text-verde-profundo uppercase tracking-wider leading-none">
           {product.name}
         </h1>
 
         {/* Price */}
         <div className="flex items-baseline gap-3">
-          <span className="font-display text-4xl text-white">{formatPrice(product.price)}</span>
-          <span className="font-condensed text-xs text-gray-muted uppercase tracking-widest">ARS</span>
+          <span className="font-display text-4xl text-verde-profundo">{formatPrice(product.price)}</span>
+          <span className="font-condensed text-xs text-texto-secundario uppercase tracking-widest">ARS</span>
         </div>
 
         {/* Description */}

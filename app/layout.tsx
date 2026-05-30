@@ -6,6 +6,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { CartDrawer } from '@/components/cart/CartDrawer'
 import { Analytics } from '@vercel/analytics/next'
+import { Toaster } from 'sonner'
 
 const montserrat = Montserrat({
   weight: ['400', '500', '600', '700', '800'],
@@ -69,6 +70,18 @@ export default function RootLayout({
           </main>
           <Footer />
         </Providers>
+        <Toaster 
+          position="bottom-right" 
+          toastOptions={{
+            style: {
+              background: '#1C301D',
+              color: '#F5F2E9',
+              border: '1px solid #2A4B2C',
+              fontFamily: 'var(--font-montserrat), sans-serif',
+            },
+            className: 'font-condensed uppercase tracking-wider text-xs',
+          }} 
+        />
         <Analytics />
       </body>
     </html>

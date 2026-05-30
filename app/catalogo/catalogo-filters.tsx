@@ -119,9 +119,13 @@ export function CatalogoFilters({ total, children }: { total: number, children: 
           }`}
         >
           {/* Backdrop */}
-          <div 
-            className="absolute inset-0 bg-black/50 lg:hidden" 
-            onClick={() => setIsMobileOpen(false)} 
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 lg:hidden"
+            style={{ backgroundColor: 'rgba(28, 48, 29, 0.45)', backdropFilter: 'blur(2px)' }}
+            onClick={() => setIsMobileOpen(false)}
           />
 
           {/* Content */}

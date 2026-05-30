@@ -47,11 +47,11 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black-900 flex items-center justify-center px-4">
+    <div className="min-h-screen pt-24 pb-20 flex items-center justify-center px-4" style={{ backgroundColor: '#F7F2E6' }}>
       <div className="w-full max-w-sm">
         <div className="mb-10 lg:mb-12">
           <div className="w-12 h-1 bg-green-500 mb-6" />
-          <h1 className="font-display text-4xl text-white tracking-wider block">RITUAL MATERO</h1>
+          <h1 className="font-display text-4xl text-verde-profundo tracking-wider block">RITUAL MATERO</h1>
           <span className="font-condensed text-[11px] text-green-500 tracking-[0.4em] uppercase">
             Panel de Administración
           </span>
@@ -115,7 +115,7 @@ export default function AdminLoginPage() {
         </form>
 
         <p className="mt-8 text-center font-condensed text-xs text-gray-muted uppercase tracking-wider">
-          <a href="/" className="hover:text-white transition-colors">← Volver al sitio</a>
+          <a href="/" className="hover:text-verde-profundo text-texto-secundario transition-colors">← Volver al sitio</a>
         </p>
       </div>
     </div>
