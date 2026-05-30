@@ -100,8 +100,8 @@ export function OrdenesClient({ initialOrders }: OrdenesClientProps) {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="font-display text-3xl lg:text-4xl text-white uppercase tracking-wider">Órdenes</h1>
-        <p className="font-condensed text-xs text-gray-muted uppercase tracking-wider mt-1">
+        <h1 className="font-display text-3xl lg:text-4xl text-verde-profundo uppercase tracking-wider">Órdenes</h1>
+        <p className="font-condensed text-xs text-texto-secundario uppercase tracking-wider mt-1">
           {orders.length} {filterStatus ? `${filterStatus}s` : 'órdenes en total'}
         </p>
       </div>
@@ -112,10 +112,10 @@ export function OrdenesClient({ initialOrders }: OrdenesClientProps) {
           <button
             key={s ?? 'all'}
             onClick={() => setFilterStatus(s)}
-            className={`font-condensed text-xs uppercase tracking-wider px-4 py-2 border transition-colors flex-shrink-0 ${
+            className={`font-condensed text-xs uppercase tracking-wider px-4 py-2 border transition-colors flex-shrink-0 rounded-sm ${
               filterStatus === s
-                ? 'border-green-600 text-green-600 bg-green-600/10'
-                : 'border-white/10 text-gray-muted hover:border-white/30 hover:text-white'
+                ? 'border-verde-musgo text-verde-musgo bg-verde-musgo/10'
+                : 'border-borde-suave text-texto-suave hover:border-verde-claro hover:text-verde-profundo'
             }`}
           >
             {s ? ORDER_STATUS_LABELS[s] : 'Todas'}
@@ -126,7 +126,7 @@ export function OrdenesClient({ initialOrders }: OrdenesClientProps) {
       {/* ── MOBILE: Cards ── */}
       <div className="lg:hidden space-y-3">
         {orders.length === 0 ? (
-          <div className="admin-card py-10 text-center font-condensed text-xs text-gray-muted uppercase">
+          <div className="admin-card py-10 text-center font-condensed text-xs text-texto-suave uppercase">
             Sin órdenes
           </div>
         ) : (
@@ -134,30 +134,30 @@ export function OrdenesClient({ initialOrders }: OrdenesClientProps) {
             <div key={order.id} className="admin-card space-y-3">
               {/* Header: ID + fecha */}
               <div className="flex items-center justify-between">
-                <span className="font-condensed text-xs text-gray-muted">
+                <span className="font-condensed text-xs text-texto-secundario">
                   #{order.id.slice(0, 8).toUpperCase()}
                 </span>
-                <span className="font-condensed text-xs text-gray-muted">
+                <span className="font-condensed text-xs text-texto-suave">
                   {new Date(order.created_at).toLocaleDateString('es-AR')}
                 </span>
               </div>
               {/* Cliente + total */}
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <p className="font-condensed text-sm text-white">{order.customer_name}</p>
-                  <p className="font-condensed text-xs text-gray-muted">{order.customer_phone}</p>
+                  <p className="font-condensed text-sm text-verde-profundo">{order.customer_name}</p>
+                  <p className="font-condensed text-xs text-texto-suave">{order.customer_phone}</p>
                 </div>
-                <span className="font-display text-lg text-white flex-shrink-0">{formatPrice(order.total)}</span>
+                <span className="font-display text-lg text-verde-profundo flex-shrink-0">{formatPrice(order.total)}</span>
               </div>
               {/* Estado + acciones */}
-              <div className="flex items-center justify-between pt-1 border-t border-white/5">
+              <div className="flex items-center justify-between pt-1 border-t border-borde-suave">
                 <span className={`badge border ${ORDER_STATUS_COLORS[order.status]}`}>
                   {ORDER_STATUS_LABELS[order.status]}
                 </span>
-                <div className="flex gap-2">
+                <div className="flex gap-2 mt-3">
                   <button
                     onClick={() => openDetail(order.id)}
-                    className="font-condensed text-xs text-gray-accent hover:text-white uppercase tracking-wider px-3 py-1.5 border border-white/10 hover:border-white/30 transition-colors"
+                    className="font-condensed text-xs text-texto-secundario hover:text-verde-profundo uppercase tracking-wider px-3 py-1.5 border border-borde-suave hover:border-verde-claro transition-colors rounded-sm"
                   >
                     Ver
                   </button>
@@ -177,12 +177,12 @@ export function OrdenesClient({ initialOrders }: OrdenesClientProps) {
       </div>
 
       {/* ── DESKTOP: Table ── */}
-      <div className="hidden lg:block admin-card overflow-x-auto">
+      <div className="hidden lg:block admin-card overflow-x-auto shadow-card">
         <table className="w-full" aria-label="Lista de órdenes">
           <thead>
-            <tr className="border-b border-white/5">
+            <tr className="border-b border-borde-suave">
               {['ID', 'Cliente', 'Total', 'Estado', 'Fecha', 'Acciones'].map((h) => (
-                <th key={h} className="pb-3 text-left font-condensed text-xs text-gray-muted uppercase tracking-wider pr-4">
+                <th key={h} className="pb-3 text-left font-condensed text-xs text-texto-secundario uppercase tracking-wider pr-4">
                   {h}
                 </th>
               ))}
@@ -191,7 +191,7 @@ export function OrdenesClient({ initialOrders }: OrdenesClientProps) {
           <tbody>
             {orders.length === 0 ? (
               <tr>
-                <td colSpan={6} className="py-12 text-center font-condensed text-xs text-gray-muted uppercase">
+                <td colSpan={6} className="py-12 text-center font-condensed text-xs text-texto-suave uppercase">
                   Sin órdenes
                 </td>
               </tr>
@@ -199,16 +199,16 @@ export function OrdenesClient({ initialOrders }: OrdenesClientProps) {
               orders.map((order) => (
                 <tr key={order.id} className="admin-table-row">
                   <td className="py-3 pr-4">
-                    <span className="font-condensed text-xs text-gray-accent">
+                    <span className="font-condensed text-xs text-texto-secundario">
                       #{order.id.slice(0, 8).toUpperCase()}
                     </span>
                   </td>
                   <td className="py-3 pr-4">
-                    <p className="font-condensed text-sm text-white">{order.customer_name}</p>
-                    <p className="font-condensed text-xs text-gray-muted">{order.customer_phone}</p>
+                    <p className="font-condensed text-sm text-verde-profundo">{order.customer_name}</p>
+                    <p className="font-condensed text-xs text-texto-suave">{order.customer_phone}</p>
                   </td>
                   <td className="py-3 pr-4">
-                    <span className="font-display text-base text-white">{formatPrice(order.total)}</span>
+                    <span className="font-display text-base text-verde-profundo">{formatPrice(order.total)}</span>
                   </td>
                   <td className="py-3 pr-4">
                     <span className={`badge border ${ORDER_STATUS_COLORS[order.status]}`}>
@@ -216,7 +216,7 @@ export function OrdenesClient({ initialOrders }: OrdenesClientProps) {
                     </span>
                   </td>
                   <td className="py-3 pr-4">
-                    <span className="font-condensed text-xs text-gray-muted">
+                    <span className="font-condensed text-xs text-texto-suave">
                       {new Date(order.created_at).toLocaleDateString('es-AR')}
                     </span>
                   </td>
@@ -224,7 +224,7 @@ export function OrdenesClient({ initialOrders }: OrdenesClientProps) {
                     <div className="flex gap-2">
                       <button
                         onClick={() => openDetail(order.id)}
-                        className="font-condensed text-xs text-gray-accent hover:text-white uppercase tracking-wider px-3 py-1.5 border border-white/10 hover:border-white/30 transition-colors"
+                        className="font-condensed text-xs text-texto-secundario hover:text-verde-profundo uppercase tracking-wider px-3 py-1.5 border border-borde-suave hover:border-verde-claro transition-colors rounded-sm"
                       >
                         Ver
                       </button>
@@ -274,20 +274,20 @@ function OrderDetailModal({ order, isLoading, onClose, onStatusChange, isUpdatin
   const [confirmDelete, setConfirmDelete] = useState(false)
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      <div className="bg-black-800 border border-white/10 w-full max-w-xl max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between px-6 py-5 border-b border-white/5">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-verde-profundo/80 backdrop-blur-sm">
+      <div className="bg-white border border-borde-suave w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-card shadow-premium">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-borde-suave">
           <div>
-            <h2 className="font-display text-2xl text-white uppercase tracking-wider">
+            <h2 className="font-display text-2xl text-verde-profundo uppercase tracking-wider">
               {order ? `Orden #${order.id.slice(0, 8).toUpperCase()}` : 'Cargando...'}
             </h2>
             {order && (
-              <p className="font-condensed text-xs text-gray-muted uppercase tracking-wider mt-0.5">
+              <p className="font-condensed text-xs text-texto-secundario uppercase tracking-wider mt-0.5">
                 {new Date(order.created_at).toLocaleString('es-AR')}
               </p>
             )}
           </div>
-          <button onClick={onClose} className="text-gray-muted hover:text-white transition-colors" aria-label="Cerrar">
+          <button onClick={onClose} className="text-texto-suave hover:text-verde-profundo transition-colors" aria-label="Cerrar">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -304,12 +304,12 @@ function OrderDetailModal({ order, isLoading, onClose, onStatusChange, isUpdatin
           <div className="p-6 space-y-6">
             {/* Customer */}
             <div>
-              <h3 className="font-condensed text-xs text-green-500 uppercase tracking-[0.3em] mb-3">Cliente</h3>
+              <h3 className="font-condensed text-xs text-verde-musgo uppercase tracking-[0.3em] mb-3">Cliente</h3>
               <div className="space-y-1.5">
-                <p className="font-condensed text-sm text-white">{order.customer_name}</p>
-                <p className="font-condensed text-xs text-gray-muted">{order.customer_email}</p>
-                <p className="font-condensed text-xs text-gray-muted">{order.customer_phone}</p>
-                <p className="font-condensed text-xs text-gray-muted">
+                <p className="font-condensed text-sm text-verde-profundo">{order.customer_name}</p>
+                <p className="font-condensed text-xs text-texto-suave">{order.customer_email}</p>
+                <p className="font-condensed text-xs text-texto-suave">{order.customer_phone}</p>
+                <p className="font-condensed text-xs text-texto-suave">
                   {order.shipping_address}, {order.shipping_city}, {order.shipping_province}
                 </p>
               </div>
@@ -318,36 +318,36 @@ function OrderDetailModal({ order, isLoading, onClose, onStatusChange, isUpdatin
             {/* Notes */}
             {order.notes && (
               <div>
-                <h3 className="font-condensed text-xs text-green-500 uppercase tracking-[0.3em] mb-2">Nota del cliente</h3>
-                <div className="bg-white/5 border border-white/10 p-3">
-                  <p className="font-condensed text-xs text-gray-accent whitespace-pre-wrap italic">"{order.notes}"</p>
+                <h3 className="font-condensed text-xs text-verde-musgo uppercase tracking-[0.3em] mb-2">Nota del cliente</h3>
+                <div className="bg-hueso border border-borde-suave p-3 rounded-sm">
+                  <p className="font-condensed text-xs text-texto-secundario whitespace-pre-wrap italic">"{order.notes}"</p>
                 </div>
               </div>
             )}
 
             {/* Items */}
             <div>
-              <h3 className="font-condensed text-xs text-green-500 uppercase tracking-[0.3em] mb-3">Productos</h3>
+              <h3 className="font-condensed text-xs text-verde-musgo uppercase tracking-[0.3em] mb-3">Productos</h3>
               <div className="space-y-2">
                 {order.order_items?.map((item: OrderItem) => (
                   <div key={item.id} className="flex justify-between">
                     <div>
-                      <span className="font-condensed text-sm text-white">{item.product_name}</span>
-                      <span className="font-condensed text-xs text-gray-muted ml-2">Var. {item.size} × {item.quantity}</span>
+                      <span className="font-condensed text-sm text-verde-profundo">{item.product_name}</span>
+                      <span className="font-condensed text-xs text-texto-suave ml-2">Var. {item.size} × {item.quantity}</span>
                     </div>
-                    <span className="font-display text-base text-white">{formatPrice(item.unit_price * item.quantity)}</span>
+                    <span className="font-display text-base text-verde-profundo">{formatPrice(item.unit_price * item.quantity)}</span>
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between pt-3 border-t border-white/10 mt-3">
-                <span className="font-condensed text-sm text-gray-accent uppercase">Total</span>
-                <span className="font-display text-xl text-white">{formatPrice(order.total)}</span>
+              <div className="flex justify-between pt-3 border-t border-borde-suave mt-3">
+                <span className="font-condensed text-sm text-texto-secundario uppercase">Total</span>
+                <span className="font-display text-xl text-verde-profundo">{formatPrice(order.total)}</span>
               </div>
             </div>
 
             {/* Status change */}
             <div>
-              <h3 className="font-condensed text-xs text-green-500 uppercase tracking-[0.3em] mb-3">
+              <h3 className="font-condensed text-xs text-verde-musgo uppercase tracking-[0.3em] mb-3">
                 Cambiar estado
               </h3>
               <div className="flex flex-wrap gap-2">
@@ -359,7 +359,7 @@ function OrderDetailModal({ order, isLoading, onClose, onStatusChange, isUpdatin
                     className={`badge border text-[11px] py-1 px-3 transition-all ${
                       order.status === s
                         ? ORDER_STATUS_COLORS[s]
-                        : 'border-white/10 text-gray-muted hover:border-white/30 hover:text-white'
+                        : 'border-borde-suave text-texto-suave hover:border-verde-claro hover:text-verde-profundo'
                     } disabled:cursor-not-allowed`}
                   >
                     {ORDER_STATUS_LABELS[s]}
@@ -370,30 +370,30 @@ function OrderDetailModal({ order, isLoading, onClose, onStatusChange, isUpdatin
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-white/5">
+            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-borde-suave">
               <a
                 href={getCustomerWhatsAppUrl(order.customer_phone, order.id.slice(0, 8).toUpperCase())}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-whatsapp py-3 text-xs text-center flex-1"
+                className="btn-whatsapp py-3 text-xs text-center flex-1 rounded-sm"
               >
                 Abrir WhatsApp
               </a>
 
               {confirmDelete ? (
-                <div className="flex gap-2 items-center flex-1 justify-end bg-red-950/20 border border-red-500/20 p-1.5">
-                  <span className="font-condensed text-[10px] text-red-400 uppercase tracking-wider pl-2">¿Seguro?</span>
+                <div className="flex gap-2 items-center flex-1 justify-end bg-red-50 border border-red-200 p-1.5 rounded-sm">
+                  <span className="font-condensed text-[10px] text-red-500 uppercase tracking-wider pl-2">¿Seguro?</span>
                   <button
                     onClick={onDelete}
                     disabled={isUpdating}
-                    className="bg-red-600 hover:bg-red-700 text-white font-condensed text-xs uppercase tracking-wider px-3.5 py-2.5 transition-colors"
+                    className="bg-red-500 hover:bg-red-600 text-white font-condensed text-xs uppercase tracking-wider px-3.5 py-2.5 transition-colors rounded-sm"
                   >
                     Sí
                   </button>
                   <button
                     onClick={() => setConfirmDelete(false)}
                     disabled={isUpdating}
-                    className="bg-black-700 hover:bg-black-600 border border-white/10 text-white font-condensed text-xs uppercase tracking-wider px-3 py-2.5 transition-colors"
+                    className="bg-hueso border border-borde-suave text-texto-secundario hover:text-verde-profundo font-condensed text-xs uppercase tracking-wider px-3 py-2.5 transition-colors rounded-sm"
                   >
                     No
                   </button>

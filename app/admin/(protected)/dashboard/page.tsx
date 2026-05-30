@@ -97,8 +97,8 @@ export default async function AdminDashboard() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="font-display text-3xl lg:text-4xl text-white uppercase tracking-wider">Dashboard</h1>
-        <p className="font-condensed text-xs text-gray-muted uppercase tracking-wider mt-1">
+        <h1 className="font-display text-3xl lg:text-4xl text-verde-profundo uppercase tracking-wider">Dashboard</h1>
+        <p className="font-condensed text-xs text-texto-secundario uppercase tracking-wider mt-1">
           {new Date().toLocaleDateString('es-AR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
         </p>
       </div>
@@ -107,14 +107,14 @@ export default async function AdminDashboard() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
         {METRICS.map((metric) => {
           const isAnchor = metric.href.startsWith('#')
-          const className = "admin-card block hover:bg-white/5 transition-colors border border-transparent hover:border-white/10"
+          const className = "admin-card block hover:bg-hueso-oscuro transition-colors border border-transparent hover:border-verde-claro shadow-card hover:shadow-premium"
           const content = (
             <>
               <div className="flex items-start justify-between mb-3">
                 <span className="text-2xl" aria-hidden="true">{metric.icon}</span>
               </div>
               <p className={`font-display text-3xl ${metric.color}`}>{metric.value}</p>
-              <p className="font-condensed text-xs text-gray-muted uppercase tracking-wider mt-1">{metric.label}</p>
+              <p className="font-condensed text-xs text-texto-secundario uppercase tracking-wider mt-1">{metric.label}</p>
             </>
           )
           return isAnchor ? (
@@ -126,12 +126,12 @@ export default async function AdminDashboard() {
       </div>
 
       {/* Recent Orders */}
-      <div className="admin-card">
+      <div className="admin-card shadow-card">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="font-condensed text-sm text-green-600 uppercase tracking-[0.3em]">
+          <h2 className="font-condensed text-sm text-verde-musgo uppercase tracking-[0.3em]">
             Últimas órdenes
           </h2>
-          <a href="/admin/ordenes" className="font-condensed text-xs text-gray-muted hover:text-white uppercase tracking-wider transition-colors">
+          <a href="/admin/ordenes" className="font-condensed text-xs text-texto-suave hover:text-verde-profundo uppercase tracking-wider transition-colors">
             Ver todas →
           </a>
         </div>
@@ -139,19 +139,19 @@ export default async function AdminDashboard() {
         {/* Mobile: cards */}
         <div className="lg:hidden space-y-3">
           {recentOrders.length === 0 ? (
-            <p className="py-6 text-center font-condensed text-xs text-gray-muted uppercase">Sin órdenes aún</p>
+            <p className="py-6 text-center font-condensed text-xs text-texto-suave uppercase">Sin órdenes aún</p>
           ) : (
             recentOrders.map((order) => (
-              <Link href={`/admin/ordenes?view=${order.id}`} key={order.id} className="border border-white/5 p-3 space-y-2 block hover:bg-white/5 transition-colors">
+              <Link href={`/admin/ordenes?view=${order.id}`} key={order.id} className="border border-borde-suave p-3 space-y-2 block hover:bg-hueso transition-colors rounded-sm">
                 <div className="flex items-center justify-between">
-                  <span className="font-condensed text-xs text-gray-accent">#{order.id.slice(0, 8).toUpperCase()}</span>
-                  <span className="font-condensed text-xs text-gray-muted">
+                  <span className="font-condensed text-xs text-texto-secundario">#{order.id.slice(0, 8).toUpperCase()}</span>
+                  <span className="font-condensed text-xs text-texto-suave">
                     {new Date(order.created_at).toLocaleDateString('es-AR')}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="font-condensed text-sm text-white">{order.customer_name}</span>
-                  <span className="font-display text-base text-white">{formatPrice(order.total)}</span>
+                  <span className="font-condensed text-sm text-verde-profundo">{order.customer_name}</span>
+                  <span className="font-display text-base text-verde-profundo">{formatPrice(order.total)}</span>
                 </div>
                 <span className={`badge border ${ORDER_STATUS_COLORS[order.status]}`}>
                   {ORDER_STATUS_LABELS[order.status]}
@@ -165,9 +165,9 @@ export default async function AdminDashboard() {
         <div className="hidden lg:block overflow-x-auto">
           <table className="w-full" aria-label="Últimas órdenes">
             <thead>
-              <tr className="border-b border-white/5">
+              <tr className="border-b border-borde-suave">
                 {['ID', 'Cliente', 'Total', 'Estado', 'Fecha'].map((h) => (
-                  <th key={h} className="pb-3 text-left font-condensed text-xs text-gray-muted uppercase tracking-wider">
+                  <th key={h} className="pb-3 text-left font-condensed text-xs text-texto-secundario uppercase tracking-wider">
                     {h}
                   </th>
                 ))}
@@ -176,7 +176,7 @@ export default async function AdminDashboard() {
             <tbody>
               {recentOrders.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="py-8 text-center font-condensed text-xs text-gray-muted uppercase">
+                  <td colSpan={5} className="py-8 text-center font-condensed text-xs text-texto-suave uppercase">
                     Sin órdenes aún
                   </td>
                 </tr>
@@ -185,20 +185,20 @@ export default async function AdminDashboard() {
                   <tr key={order.id} className="admin-table-row group">
                     <td className="py-0 pr-4">
                       <Link href={`/admin/ordenes?view=${order.id}`} className="block py-3">
-                        <span className="font-condensed text-xs text-gray-accent">
+                        <span className="font-condensed text-xs text-texto-secundario">
                           #{order.id.slice(0, 8).toUpperCase()}
                         </span>
                       </Link>
                     </td>
                     <td className="py-0 pr-4">
                       <Link href={`/admin/ordenes?view=${order.id}`} className="block py-3">
-                        <p className="font-condensed text-sm text-white">{order.customer_name}</p>
-                        <p className="font-condensed text-xs text-gray-muted">{order.customer_phone}</p>
+                        <p className="font-condensed text-sm text-verde-profundo">{order.customer_name}</p>
+                        <p className="font-condensed text-xs text-texto-suave">{order.customer_phone}</p>
                       </Link>
                     </td>
                     <td className="py-0 pr-4">
                       <Link href={`/admin/ordenes?view=${order.id}`} className="block py-3">
-                        <span className="font-display text-base text-white">{formatPrice(order.total)}</span>
+                        <span className="font-display text-base text-verde-profundo">{formatPrice(order.total)}</span>
                       </Link>
                     </td>
                     <td className="py-0 pr-4">
@@ -210,7 +210,7 @@ export default async function AdminDashboard() {
                     </td>
                     <td className="py-0">
                       <Link href={`/admin/ordenes?view=${order.id}`} className="block py-3">
-                        <span className="font-condensed text-xs text-gray-muted">
+                        <span className="font-condensed text-xs text-texto-suave">
                           {new Date(order.created_at).toLocaleDateString('es-AR')}
                         </span>
                       </Link>

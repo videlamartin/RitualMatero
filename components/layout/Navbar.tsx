@@ -12,11 +12,8 @@ import { CartIcon } from '@/components/cart/CartIcon'
 const NAV_LINKS = [
   { href: '/catalogo', label: 'Tienda' },
   { href: '/catalogo?categoria=mates', label: 'Mates' },
-  { href: '/catalogo?categoria=bombillas', label: 'Bombillas' },
   { href: '/catalogo?categoria=termos', label: 'Termos' },
   { href: '/catalogo?categoria=yerbas', label: 'Yerbas' },
-  { href: '/catalogo?categoria=accesorios', label: 'Accesorios' },
-  { href: '/catalogo?categoria=combos', label: 'Combos' },
   { href: '/seguimiento', label: 'Mis Pedidos' },
 ]
 
@@ -44,7 +41,7 @@ function MateLogo() {
           className="font-condensed text-[9px] uppercase tracking-[0.4em] -mt-0.5"
           style={{ color: '#4A6D4B' }}
         >
-          Mates · Bombillas · Termos · Yerbas · Accesorios · Combos
+          Mates · Termos · Bombillas · Accesorios
         </span>
       </div>
     </Link>
@@ -69,9 +66,8 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-400 ${
-        scrolled ? 'backdrop-blur-md' : ''
-      }`}
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-400 ${scrolled ? 'backdrop-blur-md' : ''
+        }`}
       style={{
         backgroundColor: scrolled ? 'rgba(247, 242, 230, 0.96)' : 'rgba(247, 242, 230, 0.85)',
         borderBottom: scrolled ? '1px solid #E0D9CC' : '1px solid transparent',

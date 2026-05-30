@@ -63,8 +63,8 @@ export function ProductosClient({ initialProducts }: ProductosClientProps) {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="font-display text-3xl lg:text-4xl text-white uppercase tracking-wider">Productos</h1>
-          <p className="font-condensed text-xs text-gray-muted uppercase tracking-wider mt-1">
+          <h1 className="font-display text-3xl lg:text-4xl text-verde-profundo uppercase tracking-wider">Productos</h1>
+          <p className="font-condensed text-xs text-texto-secundario uppercase tracking-wider mt-1">
             {products.length} productos en total
           </p>
         </div>
@@ -80,7 +80,7 @@ export function ProductosClient({ initialProducts }: ProductosClientProps) {
       {/* ── MOBILE: Cards ── */}
       <div className="lg:hidden space-y-3">
         {products.length === 0 ? (
-          <div className="admin-card py-10 text-center font-condensed text-xs text-gray-muted uppercase">
+          <div className="admin-card py-10 text-center font-condensed text-xs text-texto-suave uppercase">
             No hay productos. Creá el primero.
           </div>
         ) : (
@@ -89,7 +89,7 @@ export function ProductosClient({ initialProducts }: ProductosClientProps) {
               {/* Nombre + categoría */}
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <p className="font-condensed text-sm text-white uppercase tracking-wide">{product.name}</p>
+                  <p className="font-condensed text-sm text-verde-profundo uppercase tracking-wide">{product.name}</p>
                   <span className="badge badge-category mt-1">{CATEGORY_LABELS[product.category]}</span>
                 </div>
                 {product.featured && (
@@ -97,9 +97,9 @@ export function ProductosClient({ initialProducts }: ProductosClientProps) {
                 )}
               </div>
               {/* Precio + stock */}
-              <div className="flex items-center justify-between pt-2 border-t border-white/5">
-                <span className="font-display text-lg text-white">{formatPrice(product.price)}</span>
-                <span className={`font-condensed text-sm ${totalStock(product) < 5 ? 'text-yellow-400' : 'text-green-400'}`}>
+              <div className="flex items-center justify-between pt-2 border-t border-borde-suave">
+                <span className="font-display text-lg text-verde-profundo">{formatPrice(product.price)}</span>
+                <span className={`font-condensed text-sm ${totalStock(product) < 5 ? 'text-bronce' : 'text-verde-musgo'}`}>
                   {totalStock(product)} uds.
                 </span>
               </div>
@@ -107,7 +107,7 @@ export function ProductosClient({ initialProducts }: ProductosClientProps) {
               <div className="flex gap-2 pt-1">
                 <button
                   onClick={() => { setEditProduct(product); setShowModal(true) }}
-                  className="flex-1 font-condensed text-xs text-gray-accent hover:text-white uppercase tracking-wider py-2 border border-white/10 hover:border-white/30 transition-colors"
+                  className="flex-1 font-condensed text-xs text-texto-secundario hover:text-verde-profundo uppercase tracking-wider py-2 border border-borde-suave hover:border-verde-claro transition-colors rounded-sm"
                 >
                   Editar
                 </button>
@@ -122,7 +122,7 @@ export function ProductosClient({ initialProducts }: ProductosClientProps) {
                     </button>
                     <button
                       onClick={() => setDeleteConfirm(null)}
-                      className="font-condensed text-[10px] text-gray-muted hover:text-white uppercase tracking-wider px-2 py-1 border border-white/10 flex-1"
+                      className="font-condensed text-[10px] text-texto-secundario hover:text-verde-profundo uppercase tracking-wider px-2 py-1 border border-borde-suave flex-1 rounded-sm"
                     >
                       Cancelar
                     </button>
@@ -142,12 +142,12 @@ export function ProductosClient({ initialProducts }: ProductosClientProps) {
       </div>
 
       {/* ── DESKTOP: Table ── */}
-      <div className="hidden lg:block admin-card overflow-x-auto">
+      <div className="hidden lg:block admin-card overflow-x-auto shadow-card">
         <table className="w-full" aria-label="Lista de productos">
           <thead>
-            <tr className="border-b border-white/5">
+            <tr className="border-b border-borde-suave">
               {['Nombre', 'Categoría', 'Precio', 'Stock total', 'Destacado', 'Acciones'].map((h) => (
-                <th key={h} className="pb-3 text-left font-condensed text-xs text-gray-muted uppercase tracking-wider pr-4">
+                <th key={h} className="pb-3 text-left font-condensed text-xs text-texto-secundario uppercase tracking-wider pr-4">
                   {h}
                 </th>
               ))}
@@ -156,7 +156,7 @@ export function ProductosClient({ initialProducts }: ProductosClientProps) {
           <tbody>
             {products.length === 0 ? (
               <tr>
-                <td colSpan={6} className="py-12 text-center font-condensed text-xs text-gray-muted uppercase">
+                <td colSpan={6} className="py-12 text-center font-condensed text-xs text-texto-suave uppercase">
                   No hay productos. Creá el primero.
                 </td>
               </tr>
@@ -164,21 +164,21 @@ export function ProductosClient({ initialProducts }: ProductosClientProps) {
               products.map((product) => (
                 <tr key={product.id} className="admin-table-row">
                   <td className="py-3 pr-4">
-                    <p className="font-condensed text-sm text-white uppercase tracking-wide">{product.name}</p>
+                    <p className="font-condensed text-sm text-verde-profundo uppercase tracking-wide">{product.name}</p>
                   </td>
                   <td className="py-3 pr-4">
                     <span className="badge badge-category">{CATEGORY_LABELS[product.category]}</span>
                   </td>
                   <td className="py-3 pr-4">
-                    <span className="font-display text-base text-white">{formatPrice(product.price)}</span>
+                    <span className="font-display text-base text-verde-profundo">{formatPrice(product.price)}</span>
                   </td>
                   <td className="py-3 pr-4">
-                    <span className={`font-condensed text-sm ${totalStock(product) < 5 ? 'text-yellow-400' : 'text-green-400'}`}>
+                    <span className={`font-condensed text-sm ${totalStock(product) < 5 ? 'text-bronce' : 'text-verde-musgo'}`}>
                       {totalStock(product)} unidades
                     </span>
                   </td>
                   <td className="py-3 pr-4">
-                    <span className={`font-condensed text-xs uppercase ${product.featured ? 'text-red-primary' : 'text-gray-muted'}`}>
+                    <span className={`font-condensed text-xs uppercase ${product.featured ? 'text-red-primary' : 'text-texto-suave'}`}>
                       {product.featured ? '★ Sí' : 'No'}
                     </span>
                   </td>
@@ -186,7 +186,7 @@ export function ProductosClient({ initialProducts }: ProductosClientProps) {
                     <div className="flex gap-2">
                       <button
                         onClick={() => { setEditProduct(product); setShowModal(true) }}
-                        className="font-condensed text-xs text-gray-accent hover:text-white uppercase tracking-wider transition-colors px-3 py-1.5 border border-white/10 hover:border-white/30"
+                        className="font-condensed text-xs text-texto-secundario hover:text-verde-profundo uppercase tracking-wider transition-colors px-3 py-1.5 border border-borde-suave hover:border-verde-claro rounded-sm"
                       >
                         Editar
                       </button>
@@ -201,7 +201,7 @@ export function ProductosClient({ initialProducts }: ProductosClientProps) {
                           </button>
                           <button
                             onClick={() => setDeleteConfirm(null)}
-                            className="font-condensed text-[10px] text-gray-muted hover:text-white uppercase tracking-wider px-2 py-1 border border-white/10"
+                            className="font-condensed text-[10px] text-texto-secundario hover:text-verde-profundo uppercase tracking-wider px-2 py-1 border border-borde-suave rounded-sm"
                           >
                             Cancelar
                           </button>
@@ -302,13 +302,13 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      <div className="bg-black-800 border border-white/10 w-full max-w-lg max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between px-6 py-5 border-b border-white/5">
-          <h2 className="font-display text-2xl text-white uppercase tracking-wider">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-verde-profundo/80 backdrop-blur-sm">
+      <div className="bg-white border border-borde-suave w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-card shadow-premium">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-borde-suave">
+          <h2 className="font-display text-2xl text-verde-profundo uppercase tracking-wider">
             {product ? 'Editar producto' : 'Nuevo producto'}
           </h2>
-          <button onClick={onClose} className="text-gray-muted hover:text-white transition-colors" aria-label="Cerrar">
+          <button onClick={onClose} className="text-texto-suave hover:text-verde-profundo transition-colors" aria-label="Cerrar">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -384,11 +384,11 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
             <input
               type="checkbox"
               id="hasSizes"
-              className="w-4 h-4 accent-green-700 bg-transparent border border-white/20"
+              className="w-4 h-4 accent-verde-musgo bg-transparent border border-borde-suave"
               checked={hasSizes}
               onChange={(e) => setHasSizes(e.target.checked)}
             />
-            <label htmlFor="hasSizes" className="font-condensed text-sm text-gray-accent uppercase tracking-widest cursor-pointer select-none">
+            <label htmlFor="hasSizes" className="font-condensed text-sm text-texto-secundario uppercase tracking-widest cursor-pointer select-none">
               El producto tiene múltiples variantes (mates, yerbas, etc.)
             </label>
           </div>
@@ -399,12 +399,12 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
                 <label className="label-field mb-2 block">Stock por variante</label>
                 <div className="grid grid-cols-3 gap-3">
                   {VARIANT_OPTIONS.map((size) => (
-                    <div key={size} className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-2">
-                      <span className="font-display text-sm text-white w-10 uppercase">{size}</span>
+                    <div key={size} className="flex items-center gap-2 bg-hueso border border-borde-suave px-3 py-2 rounded-sm">
+                      <span className="font-display text-sm text-verde-profundo w-10 uppercase">{size}</span>
                       <input
                         type="number"
                         min="0"
-                        className="w-full bg-transparent border-b border-white/20 text-white font-condensed text-center focus:outline-none"
+                        className="w-full bg-transparent border-b border-borde-suave text-verde-profundo font-condensed text-center focus:outline-none"
                         value={sizes[size] ?? 0}
                         onChange={(e) => setSizes({ ...sizes, [size]: parseInt(e.target.value) || 0 })}
                       />
@@ -415,12 +415,12 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
             ) : (
               <>
                 <label className="label-field mb-2 block">Stock disponible (Variante única)</label>
-                <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-2 w-full sm:w-1/2">
-                  <span className="font-display text-sm text-white w-12 uppercase">Único</span>
+                <div className="flex items-center gap-2 bg-hueso border border-borde-suave px-3 py-2 w-full sm:w-1/2 rounded-sm">
+                  <span className="font-display text-sm text-verde-profundo w-12 uppercase">Único</span>
                   <input
                     type="number"
                     min="0"
-                    className="w-full bg-transparent border-b border-white/20 text-white font-condensed text-center focus:outline-none"
+                    className="w-full bg-transparent border-b border-borde-suave text-verde-profundo font-condensed text-center focus:outline-none"
                     value={sizes['unico'] ?? 0}
                     onChange={(e) => setSizes({ ...sizes, unico: parseInt(e.target.value) || 0 })}
                   />
@@ -435,9 +435,9 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
               id="featured-check"
               checked={form.featured}
               onChange={(e) => setForm({ ...form, featured: e.target.checked })}
-              className="w-4 h-4 accent-green-700"
+              className="w-4 h-4 accent-verde-musgo"
             />
-            <label htmlFor="featured-check" className="font-condensed text-sm text-gray-accent uppercase tracking-wider">
+            <label htmlFor="featured-check" className="font-condensed text-sm text-texto-secundario uppercase tracking-wider">
               Producto destacado
             </label>
           </div>

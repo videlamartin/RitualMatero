@@ -10,29 +10,34 @@ const config: Config = {
     extend: {
       colors: {
         verde: {
-          profundo: '#2C402E',
-          musgo: '#4A6D4B',
+          profundo: '#1C301D', // Aún más rico y oscuro
+          musgo: '#3A5A3B',
           claro: '#6B8F6C',
           palido: '#E8F0E8',
         },
         cuero: {
-          DEFAULT: '#B4A194',
+          DEFAULT: '#9A8272',
           claro: '#C8B8AC',
-          oscuro: '#8A7A6E',
+          oscuro: '#6A5A4A',
+        },
+        bronce: {
+          DEFAULT: '#B8860B', // Dorado Oscuro / Bronce (Accent)
+          claro: '#DAA520',
+          oscuro: '#8B6508',
         },
         hueso: {
-          DEFAULT: '#F7F2E6',
-          oscuro: '#EDE8DC',
-          claro: '#FDFAF5',
+          DEFAULT: '#FDFBF7', // Más crema luminoso
+          oscuro: '#F3EFE6',
+          claro: '#FFFFFF',
         },
         texto: {
           primario: '#1A1A1A',
-          secundario: '#5A5A5A',
-          suave: '#8A8A8A',
+          secundario: '#4A4A4A',
+          suave: '#7A7A7A',
         },
         borde: {
-          suave: '#E0D9CC',
-          DEFAULT: '#C8BFB0',
+          suave: '#EBE5D8',
+          DEFAULT: '#D1C9B8',
         },
         black: {
           900: '#0A0A0A',
@@ -93,9 +98,10 @@ const config: Config = {
         '18': '4.5rem',
       },
       boxShadow: {
-        'card': '0 2px 16px 0 rgba(44, 64, 46, 0.08)',
-        'card-hover': '0 8px 32px 0 rgba(44, 64, 46, 0.16)',
-        'drawer': '-4px 0 40px rgba(44, 64, 46, 0.15)',
+        'card': '0 4px 20px -2px rgba(28, 48, 29, 0.05)',
+        'card-hover': '0 12px 30px -4px rgba(28, 48, 29, 0.12)',
+        'drawer': '-4px 0 40px rgba(28, 48, 29, 0.15)',
+        'premium': '0 10px 40px -10px rgba(184, 134, 11, 0.15)',
       },
       borderRadius: {
         'card': '10px',

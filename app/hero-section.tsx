@@ -82,14 +82,14 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.15, ease: 'easeOut' }}
             className="font-display uppercase leading-none mb-6"
             style={{
-              fontSize: 'clamp(3.5rem, 10vw, 8rem)',
-              lineHeight: '1.0',
-              color: '#2C402E',
+              fontSize: 'clamp(3.5rem, 9vw, 7rem)',
+              lineHeight: '1.05',
+              color: 'var(--verde-profundo)',
             }}
           >
-            El ritual<br />
-            de cada<br />
-            <span style={{ color: '#4A6D4B' }}>día.</span>
+            El mate es un<br />
+            <span className="text-bronce italic pr-2">ritual</span>,<br />
+            no una rutina.
           </motion.h1>
 
           {/* Tagline */}
