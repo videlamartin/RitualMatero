@@ -6,6 +6,7 @@ import Image from 'next/image'
 import brandLogo from '@/app/img/logo.jpg'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { useCartStore } from '@/store/cart'
 import { CartIcon } from '@/components/cart/CartIcon'
 
@@ -61,6 +62,18 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  const router = useRouter()
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      router.push(`/catalogo?q=${encodeURIComponent(searchQuery.trim())}`)
+      setSearchQuery('')
+      setMenuOpen(false)
+    }
+  }
+
   const isAdmin = pathname.startsWith('/admin')
   if (isAdmin) return null
 
@@ -97,8 +110,24 @@ export function Navbar() {
             })}
           </div>
 
-          {/* Actions */}
-          <div className="flex items-center gap-3">
+          {/* Actions & Search */}
+          <div className="flex items-center gap-4">
+            {/* Desktop Search */}
+            <form onSubmit={handleSearch} className="hidden md:block relative">
+              <input
+                type="text"
+                placeholder="Buscar mates, termos..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-48 lg:w-64 pl-3 pr-10 py-1.5 bg-transparent border-b border-[#B4A194] focus:outline-none focus:border-[#2C402E] font-condensed tracking-wider text-sm text-[#2C402E] placeholder-[#8A8A8A] transition-colors"
+              />
+              <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 text-[#5A5A5A] hover:text-[#2C402E]">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </button>
+            </form>
+
             <button
               onClick={openCart}
               className="relative p-2 transition-colors"
@@ -155,6 +184,22 @@ export function Navbar() {
             }}
           >
             <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
+              {/* Mobile Search */}
+              <form onSubmit={handleSearch} className="relative mb-4 mt-2">
+                <input
+                  type="text"
+                  placeholder="Buscar productos..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-3 pr-10 py-2 bg-transparent border-b border-[#B4A194] focus:outline-none focus:border-[#2C402E] font-condensed tracking-wider text-sm text-[#2C402E] placeholder-[#8A8A8A]"
+                />
+                <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 text-[#5A5A5A]">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </button>
+              </form>
+
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}

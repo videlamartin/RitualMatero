@@ -230,6 +230,75 @@
   .admin-table-row:hover {
     background-color: var(--hueso);
   }
+
+  /* ---- ADMIN METRIC CARDS ---- */
+  .metric-card {
+    @apply rounded-card p-5 relative overflow-hidden;
+    @apply transition-all duration-300;
+    border: 1px solid var(--borde-suave);
+    box-shadow: 0 2px 12px rgba(28, 48, 29, 0.04);
+  }
+  .metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(28, 48, 29, 0.1);
+    border-color: var(--verde-claro);
+  }
+  .metric-card::before {
+    content: '';
+    @apply absolute inset-0 opacity-60;
+    pointer-events: none;
+  }
+
+  .metric-card-blue {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #BFDBFE40 100%);
+  }
+  .metric-card-green {
+    background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 50%, #BBF7D040 100%);
+  }
+  .metric-card-amber {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 50%, #FDE68A40 100%);
+  }
+  .metric-card-red {
+    background: linear-gradient(135deg, #FEF2F2 0%, #FECACA60 50%, #FCA5A540 100%);
+  }
+
+  .metric-icon {
+    @apply w-10 h-10 rounded-lg flex items-center justify-center;
+    @apply transition-transform duration-300;
+  }
+  .metric-card:hover .metric-icon {
+    transform: scale(1.1);
+  }
+
+  /* ---- PULSE DOT ---- */
+  .pulse-dot {
+    @apply w-2.5 h-2.5 rounded-full relative;
+  }
+  .pulse-dot::after {
+    content: '';
+    @apply absolute inset-0 rounded-full;
+    animation: pulse-ring 2s ease-out infinite;
+  }
+
+  /* ---- AVATAR INITIALS ---- */
+  .avatar-initials {
+    @apply w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0;
+    @apply font-display text-xs uppercase;
+    background: linear-gradient(135deg, var(--verde-profundo), var(--verde-musgo));
+    color: white;
+  }
+
+  /* ---- STOCK PROGRESS BAR ---- */
+  .stock-bar {
+    @apply h-1.5 rounded-full overflow-hidden;
+    background-color: var(--hueso-oscuro);
+  }
+  .stock-bar-fill {
+    @apply h-full rounded-full transition-all duration-500;
+  }
+  .stock-bar-critical { background: linear-gradient(90deg, #ef4444, #f87171); }
+  .stock-bar-warning { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .stock-bar-ok { background: linear-gradient(90deg, var(--verde-musgo), var(--verde-claro)); }
 }
 
 @layer utilities {

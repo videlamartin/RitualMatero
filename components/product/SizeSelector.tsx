@@ -19,18 +19,19 @@ export function SizeSelector({ sizes, selectedSize, onSelect }: VariantSelectorP
         <span className="label-field">Variante</span>
         {selectedSize && (
           <span className="font-condensed text-xs uppercase tracking-widest" style={{ color: '#4A6D4B' }}>
-            {VARIANT_LABELS[selectedSize] ?? selectedSize} seleccionado
+            {VARIANT_LABELS?.[selectedSize] ?? selectedSize} seleccionado
           </span>
         )}
       </div>
 
       <div className="flex flex-wrap gap-2">
-        {VARIANT_ORDER.filter((size) => sizeMap.has(size)).map((size) => {
-          const stock = sizeMap.get(size) ?? 0
+        {sizes.map((s) => {
+          const size = s.size
+          const stock = s.stock
           const outOfStock = stock === 0
           const stockInfo = getStockLabel(stock)
           const isSelected = selectedSize === size
-          const label = VARIANT_LABELS[size] ?? size
+          const label = VARIANT_LABELS?.[size] ?? size
 
           return (
             <button

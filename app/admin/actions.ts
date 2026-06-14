@@ -111,6 +111,7 @@ interface ProductData {
   featured: boolean
   images: string[]
   sizes: { size: string; stock: number }[]
+  metadata?: any
 }
 
 export async function upsertProduct(data: ProductData) {

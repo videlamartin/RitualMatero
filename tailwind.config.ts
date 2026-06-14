@@ -63,6 +63,7 @@ const config: Config = {
         'slide-in-right': 'slideInRight 0.5s ease-out forwards',
         'shimmer': 'shimmer 2s infinite',
         'float': 'float 3s ease-in-out infinite',
+        'pulse-ring': 'pulseRing 2s ease-out infinite',
       },
       keyframes: {
         fadeUp: {
@@ -84,6 +85,10 @@ const config: Config = {
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-6px)' },
+        },
+        pulseRing: {
+          '0%': { transform: 'scale(1)', opacity: '0.6' },
+          '100%': { transform: 'scale(2.5)', opacity: '0' },
         },
       },
       backdropBlur: {

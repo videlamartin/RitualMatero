@@ -3,6 +3,7 @@ import { z } from 'zod'
 export const checkoutSchema = z.object({
   customer_name: z
     .string()
+    .trim()
     .min(3, 'El nombre debe tener al menos 3 caracteres')
     .max(100, 'Nombre demasiado largo'),
   customer_email: z
@@ -10,15 +11,18 @@ export const checkoutSchema = z.object({
     .email('Email inválido'),
   customer_phone: z
     .string()
+    .trim()
     .min(8, 'Teléfono inválido')
     .max(20, 'Teléfono demasiado largo')
     .regex(/^[\d\s\+\-\(\)]+$/, 'Solo números, espacios y + - ()'),
   shipping_address: z
     .string()
+    .trim()
     .min(5, 'Dirección inválida')
     .max(200, 'Dirección demasiado larga'),
   shipping_city: z
     .string()
+    .trim()
     .min(2, 'Ciudad inválida')
     .max(100, 'Ciudad demasiado larga'),
   shipping_province: z

@@ -2,7 +2,18 @@
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import { ProductCategory, ProductVariant, CATEGORY_LABELS, VARIANT_LABELS } from '@/types'
+import { ProductCategory, CATEGORY_LABELS } from '@/types'
+import {
+  MATE_TYPES,
+  MATE_MATERIALS,
+  MATE_TERMINACIONES,
+  TERMO_CAPACITIES,
+  YERBA_TYPES,
+  BOMBILLA_TYPES,
+  BOMBILLA_MATERIALS,
+  ACCESORIO_CATEGORIES,
+  COMBO_TYPES,
+} from '@/types'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const CATEGORIES: { value: ProductCategory | 'all'; label: string }[] = [
@@ -15,18 +26,21 @@ const CATEGORIES: { value: ProductCategory | 'all'; label: string }[] = [
   { value: 'combos', label: 'COMBOS' },
 ]
 
-const CATEGORY_VARIANTS: Partial<Record<ProductCategory, ProductVariant[]>> = {
-  mates: ['natural', 'curado'],
-  yerbas: ['250g', '500g', '1kg'],
-  termos: ['500ml', '1l', '1.5l'],
-}
-
-export function CatalogoFilters({ total, children }: { total: number, children: React.ReactNode }) {
+export function CatalogoFilters({
+  total,
+  searchParams: serverSearchParams, // Passed from server but we mostly use useSearchParams
+  children
+}: {
+  total: number
+  searchParams: Record<string, string | undefined>
+  children: React.ReactNode
+}) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
   const currentCategory = searchParams.get('categoria') || 'all'
-  const currentVariant = searchParams.get('variante') || ''
+  const currentQ = searchParams.get('q') || ''
+  
   const currentMinPrice = searchParams.get('precioMin') || ''
   const currentMaxPrice = searchParams.get('precioMax') || ''
 
@@ -49,7 +63,18 @@ export function CatalogoFilters({ total, children }: { total: number, children: 
       }
     })
     params.delete('pagina')
-    router.push(`/catalogo?${params.toString()}`)
+    router.push(`/catalogo?${params.toString()}`, { scroll: false })
+  }
+
+  const toggleMultiFilter = (key: string, value: string) => {
+    const current = searchParams.get(key)
+    let newValues: string[] = current ? current.split(',') : []
+    if (newValues.includes(value)) {
+      newValues = newValues.filter(v => v !== value)
+    } else {
+      newValues.push(value)
+    }
+    updateFilters({ [key]: newValues.length > 0 ? newValues.join(',') : null })
   }
 
   const applyPrice = () => {
@@ -62,17 +87,87 @@ export function CatalogoFilters({ total, children }: { total: number, children: 
   const clearFilters = () => {
     setMinPrice('')
     setMaxPrice('')
-    router.push('/catalogo')
+    router.push('/catalogo', { scroll: false })
     setIsMobileOpen(false)
   }
 
   const handleCategoryClick = (val: string) => {
-    updateFilters({ categoria: val, variante: null })
+    // Al cambiar de categoría, limpiamos los filtros específicos
+    updateFilters({ 
+      categoria: val, 
+      tipo: null, material: null, terminacion: null, 
+      capacidad: null, marca: null, tipo_yerba: null, 
+      tipo_bombilla: null, categoria_accesorio: null, tipo_combo: null,
+      variante: null 
+    })
   }
 
-  const hasActiveFilters = currentCategory !== 'all' || currentVariant !== '' || currentMinPrice !== '' || currentMaxPrice !== ''
+  // Verifica si hay algo activo además de la categoría por defecto
+  const hasActiveFilters = Array.from(searchParams.keys()).some(k => k !== 'pagina' && k !== 'q') || currentQ !== ''
 
-  const availableVariants = currentCategory !== 'all' ? CATEGORY_VARIANTS[currentCategory as ProductCategory] : undefined
+  // Componente helper para renderizar grupos de botones (single select)
+  const renderSingleSelect = (key: string, label: string, options: readonly string[]) => {
+    const currentVal = searchParams.get(key) || ''
+    return (
+      <div className="mb-6">
+        <h3 className="font-condensed text-xs uppercase tracking-[0.3em] mb-4 text-[#4A6D4B]">
+          {label}
+        </h3>
+        <div className="flex flex-wrap gap-2">
+          {options.map((opt) => {
+            const isActive = currentVal === opt
+            return (
+              <button
+                key={opt}
+                onClick={() => updateFilters({ [key]: isActive ? null : opt })}
+                className={`px-3 py-1.5 rounded-sm font-condensed text-xs tracking-wider uppercase border transition-colors ${
+                  isActive
+                    ? 'bg-[#2C402E]/10 border-[#2C402E] text-[#2C402E]'
+                    : 'bg-white border-[#E0D9CC] text-[#5A5A5A] hover:border-[#2C402E]'
+                }`}
+              >
+                {opt}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+
+  // Componente helper para renderizar grupos de checkboxes (multi select)
+  const renderMultiSelect = (key: string, label: string, options: readonly string[]) => {
+    const currentVal = searchParams.get(key) || ''
+    const selected = currentVal ? currentVal.split(',') : []
+    return (
+      <div className="mb-6">
+        <h3 className="font-condensed text-xs uppercase tracking-[0.3em] mb-4 text-[#4A6D4B]">
+          {label}
+        </h3>
+        <div className="flex flex-col gap-2">
+          {options.map((opt) => {
+            const isActive = selected.includes(opt)
+            return (
+              <label key={opt} className="flex items-center gap-3 cursor-pointer group">
+                <div className={`w-4 h-4 rounded-sm border flex items-center justify-center transition-colors ${
+                  isActive ? 'bg-[#2C402E] border-[#2C402E]' : 'bg-white border-[#B4A194] group-hover:border-[#2C402E]'
+                }`}>
+                  {isActive && (
+                    <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </div>
+                <span className={`font-condensed text-sm tracking-wider uppercase ${isActive ? 'text-[#2C402E]' : 'text-[#5A5A5A]'}`}>
+                  {opt}
+                </span>
+              </label>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="w-full">
@@ -141,50 +236,51 @@ export function CatalogoFilters({ total, children }: { total: number, children: 
               </button>
             </div>
 
-            <div className="space-y-8">
-              {/* Variant Filter (Conditional) */}
+            <div className="space-y-2">
+              {/* Filtros Dinámicos por Categoría */}
               <AnimatePresence>
-                {availableVariants && availableVariants.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="overflow-hidden"
-                  >
-                    <h3 className="font-condensed text-xs uppercase tracking-[0.3em] mb-4 text-[#4A6D4B]">
-                      Variante
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      <button
-                        onClick={() => updateFilters({ variante: null })}
-                        className={`px-3 py-1.5 rounded-sm font-condensed text-xs tracking-wider uppercase border transition-colors ${
-                          !currentVariant
-                            ? 'bg-[#2C402E]/10 border-[#2C402E] text-[#2C402E]'
-                            : 'bg-white border-[#E0D9CC] text-[#5A5A5A] hover:border-[#2C402E]'
-                        }`}
-                      >
-                        TODAS
-                      </button>
-                      {availableVariants.map((v) => (
-                        <button
-                          key={v}
-                          onClick={() => updateFilters({ variante: v })}
-                          className={`px-3 py-1.5 rounded-sm font-condensed text-xs tracking-wider uppercase border transition-colors ${
-                            currentVariant === v
-                              ? 'bg-[#2C402E]/10 border-[#2C402E] text-[#2C402E]'
-                              : 'bg-white border-[#E0D9CC] text-[#5A5A5A] hover:border-[#2C402E]'
-                          }`}
-                        >
-                          {VARIANT_LABELS[v]}
-                        </button>
-                      ))}
-                    </div>
+                {currentCategory === 'mates' && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                    {renderSingleSelect('tipo', 'Tipo de Mate', MATE_TYPES)}
+                    {renderMultiSelect('material', 'Material', MATE_MATERIALS)}
+                    {renderMultiSelect('terminacion', 'Terminaciones', MATE_TERMINACIONES)}
+                  </motion.div>
+                )}
+                
+                {currentCategory === 'termos' && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                    {renderSingleSelect('capacidad', 'Capacidad', TERMO_CAPACITIES)}
+                  </motion.div>
+                )}
+
+                {currentCategory === 'yerbas' && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                    {renderSingleSelect('tipo_yerba', 'Tipo de Yerba', YERBA_TYPES)}
+                  </motion.div>
+                )}
+
+                {currentCategory === 'bombillas' && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                    {renderSingleSelect('tipo_bombilla', 'Tipo de Bombilla', BOMBILLA_TYPES)}
+                    {renderMultiSelect('material', 'Material', BOMBILLA_MATERIALS)}
+                  </motion.div>
+                )}
+
+                {currentCategory === 'accesorios' && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                    {renderSingleSelect('categoria_accesorio', 'Categoría', ACCESORIO_CATEGORIES)}
+                  </motion.div>
+                )}
+
+                {currentCategory === 'combos' && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                    {renderSingleSelect('tipo_combo', 'Tipo de Combo', COMBO_TYPES)}
                   </motion.div>
                 )}
               </AnimatePresence>
 
               {/* Price Filter */}
-              <div>
+              <div className="mb-6">
                 <h3 className="font-condensed text-xs uppercase tracking-[0.3em] mb-4 text-[#4A6D4B]">
                   Precio (ARS)
                 </h3>

@@ -60,6 +60,15 @@ async function getDashboardData(): Promise<{ stats: DashboardStats; recentOrders
   }
 }
 
+function getInitials(name: string): string {
+  return name
+    .split(' ')
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join('')
+    .toUpperCase()
+}
+
 export default async function AdminDashboard() {
   const { stats, recentOrders, lowStockItems } = await getDashboardData()
 
@@ -67,36 +76,66 @@ export default async function AdminDashboard() {
     {
       label: 'Órdenes hoy',
       value: stats.orders_today,
-      icon: '📦',
-      color: 'text-blue-400',
+      cardClass: 'metric-card-blue',
+      iconBg: 'bg-blue-500/10',
+      iconColor: 'text-blue-600',
+      valueColor: 'text-blue-700',
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+        </svg>
+      ),
       href: '/admin/ordenes',
     },
     {
       label: 'Facturado hoy',
       value: formatPrice(stats.revenue_today),
-      icon: '💰',
-      color: 'text-green-400',
+      cardClass: 'metric-card-green',
+      iconBg: 'bg-emerald-500/10',
+      iconColor: 'text-emerald-600',
+      valueColor: 'text-emerald-700',
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
       href: '/admin/ordenes',
     },
     {
       label: 'Órdenes pendientes',
       value: stats.pending_orders,
-      icon: '⏳',
-      color: 'text-yellow-400',
+      cardClass: 'metric-card-amber',
+      iconBg: 'bg-amber-500/10',
+      iconColor: 'text-amber-600',
+      valueColor: 'text-amber-700',
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
       href: '/admin/ordenes?filter=pendiente',
+      showPulse: stats.pending_orders > 0,
     },
     {
-      label: 'Variantes con stock bajo',
+      label: 'Stock bajo',
       value: stats.low_stock_count,
-      icon: '⚠️',
-      color: 'text-red-400',
+      cardClass: 'metric-card-red',
+      iconBg: 'bg-red-500/10',
+      iconColor: 'text-red-500',
+      valueColor: 'text-red-600',
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+      ),
       href: '#low-stock',
     },
   ]
 
   return (
     <div>
-      <div className="mb-6">
+      {/* Header */}
+      <div className="mb-8">
         <h1 className="font-display text-3xl lg:text-4xl text-verde-profundo uppercase tracking-wider">Dashboard</h1>
         <p className="font-condensed text-xs text-texto-secundario uppercase tracking-wider mt-1">
           {new Date().toLocaleDateString('es-AR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
@@ -107,14 +146,21 @@ export default async function AdminDashboard() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
         {METRICS.map((metric) => {
           const isAnchor = metric.href.startsWith('#')
-          const className = "admin-card block hover:bg-hueso-oscuro transition-colors border border-transparent hover:border-verde-claro shadow-card hover:shadow-premium"
+          const className = `metric-card ${metric.cardClass} block`
           const content = (
             <>
-              <div className="flex items-start justify-between mb-3">
-                <span className="text-2xl" aria-hidden="true">{metric.icon}</span>
+              <div className="flex items-start justify-between mb-4 relative">
+                <div className={`metric-icon ${metric.iconBg} ${metric.iconColor}`}>
+                  {metric.icon}
+                </div>
+                {'showPulse' in metric && metric.showPulse && (
+                  <div className="pulse-dot bg-amber-500" style={{ position: 'absolute', top: 2, right: 2 }}>
+                    <span className="absolute inset-0 rounded-full bg-amber-500 animate-pulse-ring" />
+                  </div>
+                )}
               </div>
-              <p className={`font-display text-3xl ${metric.color}`}>{metric.value}</p>
-              <p className="font-condensed text-xs text-texto-secundario uppercase tracking-wider mt-1">{metric.label}</p>
+              <p className={`font-display text-2xl lg:text-3xl ${metric.valueColor}`}>{metric.value}</p>
+              <p className="font-condensed text-[10px] text-texto-secundario uppercase tracking-[0.15em] mt-1">{metric.label}</p>
             </>
           )
           return isAnchor ? (
@@ -131,8 +177,11 @@ export default async function AdminDashboard() {
           <h2 className="font-condensed text-sm text-verde-musgo uppercase tracking-[0.3em]">
             Últimas órdenes
           </h2>
-          <a href="/admin/ordenes" className="font-condensed text-xs text-texto-suave hover:text-verde-profundo uppercase tracking-wider transition-colors">
-            Ver todas →
+          <a href="/admin/ordenes" className="font-condensed text-xs text-texto-suave hover:text-verde-profundo uppercase tracking-wider transition-colors flex items-center gap-1.5 group">
+            Ver todas
+            <svg className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </a>
         </div>
 
@@ -150,7 +199,10 @@ export default async function AdminDashboard() {
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="font-condensed text-sm text-verde-profundo">{order.customer_name}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="avatar-initials text-[10px] w-6 h-6">{getInitials(order.customer_name)}</span>
+                    <span className="font-condensed text-sm text-verde-profundo">{order.customer_name}</span>
+                  </div>
                   <span className="font-display text-base text-verde-profundo">{formatPrice(order.total)}</span>
                 </div>
                 <span className={`badge border ${ORDER_STATUS_COLORS[order.status]}`}>
@@ -192,8 +244,13 @@ export default async function AdminDashboard() {
                     </td>
                     <td className="py-0 pr-4">
                       <Link href={`/admin/ordenes?view=${order.id}`} className="block py-3">
-                        <p className="font-condensed text-sm text-verde-profundo">{order.customer_name}</p>
-                        <p className="font-condensed text-xs text-texto-suave">{order.customer_phone}</p>
+                        <div className="flex items-center gap-2.5">
+                          <span className="avatar-initials">{getInitials(order.customer_name)}</span>
+                          <div>
+                            <p className="font-condensed text-sm text-verde-profundo">{order.customer_name}</p>
+                            <p className="font-condensed text-xs text-texto-suave">{order.customer_phone}</p>
+                          </div>
+                        </div>
                       </Link>
                     </td>
                     <td className="py-0 pr-4">

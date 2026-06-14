@@ -88,29 +88,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Error al guardar los items del pedido' }, { status: 500 })
     }
 
-    // 6. Decrement stock
-    for (const item of items) {
-      const { error: stockError } = await supabase.rpc('decrement_stock', {
-        p_product_id: item.product_id,
-        p_size: item.size,
-        p_quantity: item.quantity,
-      })
-
-      if (stockError) {
-        // Fallback: manual update
-        await supabase
-          .from('product_sizes')
-          .update({
-            stock: supabase.rpc('decrement_stock', {
-              p_product_id: item.product_id,
-              p_size: item.size,
-              p_quantity: item.quantity,
-            }),
-          })
-          .eq('product_id', item.product_id)
-          .eq('size', item.size)
-      }
-    }
+    // Stock is NOT decremented here.
+    // updateOrderStatus in actions.ts manages stock when the admin
+    // transitions the order away from 'pendiente' (e.g. → preparando).
 
     return NextResponse.json({ orderId: order.id, success: true }, { status: 201 })
   } catch (error) {

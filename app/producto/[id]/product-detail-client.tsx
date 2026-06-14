@@ -124,6 +124,26 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           </p>
         )}
 
+        {/* Characteristics (Metadata) */}
+        {product.metadata && Object.keys(product.metadata).length > 0 && (
+          <div className="py-4 border-t border-b border-[#2C402E]/10 flex flex-col gap-2">
+            <h3 className="font-condensed text-xs uppercase tracking-[0.3em] text-[#4A6D4B] mb-2">Características</h3>
+            <ul className="grid grid-cols-2 gap-y-2 gap-x-4">
+              {Object.entries(product.metadata).map(([key, value]) => {
+                if (!value || (Array.isArray(value) && value.length === 0)) return null;
+                const displayKey = key.replace('_', ' ');
+                const displayValue = Array.isArray(value) ? value.join(', ') : value;
+                return (
+                  <li key={key} className="flex flex-col">
+                    <span className="font-condensed text-[10px] uppercase tracking-wider text-[#8A8A8A]">{displayKey}</span>
+                    <span className="font-body text-sm text-[#2C402E]">{displayValue}</span>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        )}
+
         {/* Size selector */}
         {!isOneSize && sizes.length > 0 && (
           <SizeSelector
