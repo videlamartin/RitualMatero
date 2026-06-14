@@ -131,10 +131,10 @@ export function OrdenesClient({ initialOrders }: OrdenesClientProps) {
           </div>
         ) : (
           orders.map((order) => (
-            <div key={order.id} className="admin-card space-y-3">
+            <div key={order.id} className="admin-card space-y-4 p-4 shadow-sm border border-borde-suave">
               {/* Header: ID + fecha */}
-              <div className="flex items-center justify-between">
-                <span className="font-condensed text-xs text-texto-secundario">
+              <div className="flex items-center justify-between pb-2 border-b border-borde-suave">
+                <span className="font-condensed text-sm text-verde-profundo font-bold tracking-wider">
                   #{order.id.slice(0, 8).toUpperCase()}
                 </span>
                 <span className="font-condensed text-xs text-texto-suave">
@@ -144,32 +144,33 @@ export function OrdenesClient({ initialOrders }: OrdenesClientProps) {
               {/* Cliente + total */}
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <p className="font-condensed text-sm text-verde-profundo">{order.customer_name}</p>
-                  <p className="font-condensed text-xs text-texto-suave">{order.customer_phone}</p>
+                  <p className="font-condensed text-base text-verde-profundo">{order.customer_name}</p>
+                  <p className="font-condensed text-xs text-texto-suave mt-0.5">{order.customer_phone}</p>
                 </div>
-                <span className="font-display text-lg text-verde-profundo flex-shrink-0">{formatPrice(order.total)}</span>
+                <div className="flex flex-col items-end">
+                  <span className="font-display text-xl text-verde-profundo mb-1">{formatPrice(order.total)}</span>
+                  <span className={`badge border ${ORDER_STATUS_COLORS[order.status]}`}>
+                    {ORDER_STATUS_LABELS[order.status]}
+                  </span>
+                </div>
               </div>
-              {/* Estado + acciones */}
-              <div className="flex items-center justify-between pt-1 border-t border-borde-suave">
-                <span className={`badge border ${ORDER_STATUS_COLORS[order.status]}`}>
-                  {ORDER_STATUS_LABELS[order.status]}
-                </span>
-                <div className="flex gap-2 mt-3">
-                  <button
-                    onClick={() => openDetail(order.id)}
-                    className="font-condensed text-xs text-texto-secundario hover:text-verde-profundo uppercase tracking-wider px-3 py-1.5 border border-borde-suave hover:border-verde-claro transition-colors rounded-sm"
-                  >
-                    Ver
-                  </button>
-                  <a
-                    href={getCustomerWhatsAppUrl(order.customer_phone, order.id.slice(0, 8).toUpperCase())}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-condensed text-xs text-[#25D366] border border-[#25D366]/30 hover:bg-[#25D366]/10 uppercase tracking-wider px-3 py-1.5 transition-colors"
-                  >
-                    WA
-                  </a>
-                </div>
+              {/* Acciones */}
+              <div className="flex gap-2 pt-2">
+                <button
+                  onClick={() => openDetail(order.id)}
+                  className="flex-1 font-condensed text-sm text-texto-secundario hover:text-verde-profundo uppercase tracking-wider py-2.5 border border-borde-suave hover:border-verde-claro transition-colors rounded-sm bg-white"
+                >
+                  Ver Detalle
+                </button>
+                <a
+                  href={getCustomerWhatsAppUrl(order.customer_phone, order.id.slice(0, 8).toUpperCase())}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-condensed text-sm text-[#25D366] border border-[#25D366]/30 hover:bg-[#25D366]/10 uppercase tracking-wider px-4 py-2.5 transition-colors rounded-sm flex items-center justify-center bg-white"
+                >
+                  <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+                  WhatsApp
+                </a>
               </div>
             </div>
           ))
@@ -356,10 +357,10 @@ function OrderDetailModal({ order, isLoading, onClose, onStatusChange, isUpdatin
                     key={s}
                     onClick={() => onStatusChange(s)}
                     disabled={isUpdating || order.status === s}
-                    className={`badge border text-[11px] py-1 px-3 transition-all ${
+                    className={`badge border text-xs py-2 px-4 transition-all flex-1 text-center justify-center ${
                       order.status === s
-                        ? ORDER_STATUS_COLORS[s]
-                        : 'border-borde-suave text-texto-suave hover:border-verde-claro hover:text-verde-profundo'
+                        ? ORDER_STATUS_COLORS[s] + ' font-bold shadow-sm'
+                        : 'border-borde-suave text-texto-suave hover:border-verde-claro hover:text-verde-profundo bg-hueso/30'
                     } disabled:cursor-not-allowed`}
                   >
                     {ORDER_STATUS_LABELS[s]}
@@ -370,30 +371,30 @@ function OrderDetailModal({ order, isLoading, onClose, onStatusChange, isUpdatin
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-borde-suave">
+            <div className="flex flex-col sm:flex-row gap-3 pt-4 pb-8 sm:pb-0 border-t border-borde-suave sticky bottom-0 bg-white">
               <a
                 href={getCustomerWhatsAppUrl(order.customer_phone, order.id.slice(0, 8).toUpperCase())}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-whatsapp py-3 text-xs text-center flex-1 rounded-sm"
+                className="btn-whatsapp py-3.5 text-sm text-center flex-1 rounded-sm"
               >
                 Abrir WhatsApp
               </a>
 
               {confirmDelete ? (
                 <div className="flex gap-2 items-center flex-1 justify-end bg-red-50 border border-red-200 p-1.5 rounded-sm">
-                  <span className="font-condensed text-[10px] text-red-500 uppercase tracking-wider pl-2">¿Seguro?</span>
+                  <span className="font-condensed text-xs text-red-500 uppercase tracking-wider pl-2 flex-1">¿Seguro?</span>
                   <button
                     onClick={onDelete}
                     disabled={isUpdating}
-                    className="bg-red-500 hover:bg-red-600 text-white font-condensed text-xs uppercase tracking-wider px-3.5 py-2.5 transition-colors rounded-sm"
+                    className="bg-red-500 hover:bg-red-600 text-white font-condensed text-xs uppercase tracking-wider px-4 py-3 transition-colors rounded-sm"
                   >
                     Sí
                   </button>
                   <button
                     onClick={() => setConfirmDelete(false)}
                     disabled={isUpdating}
-                    className="bg-hueso border border-borde-suave text-texto-secundario hover:text-verde-profundo font-condensed text-xs uppercase tracking-wider px-3 py-2.5 transition-colors rounded-sm"
+                    className="bg-white border border-borde-suave text-texto-secundario hover:text-verde-profundo font-condensed text-xs uppercase tracking-wider px-4 py-3 transition-colors rounded-sm"
                   >
                     No
                   </button>
@@ -402,13 +403,13 @@ function OrderDetailModal({ order, isLoading, onClose, onStatusChange, isUpdatin
                 <button
                   onClick={() => setConfirmDelete(true)}
                   disabled={isUpdating}
-                  className="btn-secondary text-red-500 border-red-500/20 hover:border-red-500/50 hover:bg-red-500/10 py-3 text-xs flex-1 uppercase tracking-wider"
+                  className="btn-secondary text-red-500 border-red-500/20 hover:border-red-500/50 hover:bg-red-500/10 py-3.5 text-sm flex-1 uppercase tracking-wider bg-white"
                 >
                   Eliminar Orden
                 </button>
               )}
 
-              <button onClick={onClose} className="btn-secondary px-6 py-3 text-xs">
+              <button onClick={onClose} className="btn-secondary px-6 py-3.5 text-sm bg-white hidden sm:block">
                 Cerrar
               </button>
             </div>

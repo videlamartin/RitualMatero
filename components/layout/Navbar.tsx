@@ -89,10 +89,12 @@ export function Navbar() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <MateLogo />
+          <div className="flex-1 flex justify-start">
+            <MateLogo />
+          </div>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex flex-1 justify-center items-center gap-6 lg:gap-10">
             {NAV_LINKS.map((link) => {
               const isActive = pathname === link.href || (link.href !== '/catalogo' && pathname.startsWith(link.href.split('?')[0]) && link.href.includes('?') && typeof window !== 'undefined')
               return (
@@ -111,7 +113,7 @@ export function Navbar() {
           </div>
 
           {/* Actions & Search */}
-          <div className="flex items-center gap-4">
+          <div className="flex-1 flex justify-end items-center gap-3 sm:gap-5">
             {/* Desktop Search */}
             <form onSubmit={handleSearch} className="hidden md:block relative">
               <input
@@ -205,12 +207,13 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="font-condensed text-sm uppercase tracking-widest py-3 transition-colors"
+                  className="font-condensed text-sm uppercase tracking-widest py-4 transition-colors flex items-center justify-between"
                   style={{ color: '#5A5A5A', borderBottom: '1px solid #E0D9CC' }}
                   onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = '#2C402E')}
                   onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = '#5A5A5A')}
                 >
-                  {link.label}
+                  <span>{link.label}</span>
+                  <svg className="w-4 h-4 text-[#B4A194]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" /></svg>
                 </Link>
               ))}
             </div>

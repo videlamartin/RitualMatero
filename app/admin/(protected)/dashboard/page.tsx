@@ -159,8 +159,8 @@ export default async function AdminDashboard() {
                   </div>
                 )}
               </div>
-              <p className={`font-display text-2xl lg:text-3xl ${metric.valueColor}`}>{metric.value}</p>
-              <p className="font-condensed text-[10px] text-texto-secundario uppercase tracking-[0.15em] mt-1">{metric.label}</p>
+              <p className={`font-display text-xl lg:text-3xl ${metric.valueColor}`}>{metric.value}</p>
+              <p className="font-condensed text-[9px] sm:text-[10px] text-texto-secundario uppercase tracking-[0.1em] sm:tracking-[0.15em] mt-1">{metric.label}</p>
             </>
           )
           return isAnchor ? (
@@ -191,7 +191,7 @@ export default async function AdminDashboard() {
             <p className="py-6 text-center font-condensed text-xs text-texto-suave uppercase">Sin órdenes aún</p>
           ) : (
             recentOrders.map((order) => (
-              <Link href={`/admin/ordenes?view=${order.id}`} key={order.id} className="border border-borde-suave p-3 space-y-2 block hover:bg-hueso transition-colors rounded-sm">
+              <Link href={`/admin/ordenes?view=${order.id}`} key={order.id} className="admin-card border border-borde-suave p-4 space-y-3 block hover:bg-hueso transition-colors rounded-sm shadow-sm">
                 <div className="flex items-center justify-between">
                   <span className="font-condensed text-xs text-texto-secundario">#{order.id.slice(0, 8).toUpperCase()}</span>
                   <span className="font-condensed text-xs text-texto-suave">
@@ -203,11 +203,14 @@ export default async function AdminDashboard() {
                     <span className="avatar-initials text-[10px] w-6 h-6">{getInitials(order.customer_name)}</span>
                     <span className="font-condensed text-sm text-verde-profundo">{order.customer_name}</span>
                   </div>
-                  <span className="font-display text-base text-verde-profundo">{formatPrice(order.total)}</span>
+                  <span className="font-display text-lg text-verde-profundo bg-hueso py-1 px-2 rounded-sm border border-borde-suave">{formatPrice(order.total)}</span>
                 </div>
-                <span className={`badge border ${ORDER_STATUS_COLORS[order.status]}`}>
-                  {ORDER_STATUS_LABELS[order.status]}
-                </span>
+                <div className="pt-2 border-t border-borde-suave flex justify-between items-center">
+                  <span className={`badge border ${ORDER_STATUS_COLORS[order.status]}`}>
+                    {ORDER_STATUS_LABELS[order.status]}
+                  </span>
+                  <span className="font-condensed text-xs text-texto-secundario">Tocar para ver →</span>
+                </div>
               </Link>
             ))
           )}

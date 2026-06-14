@@ -35,25 +35,54 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- 5. Crear columna generada para la Búsqueda Inteligente (Full Text Search + Fuzzy)
--- Concatena nombre, descripción, categoría y todos los valores relevantes del JSONB.
+-- 5. Crear columna para la Búsqueda Inteligente (Full Text Search + Fuzzy)
 ALTER TABLE products 
-ADD COLUMN IF NOT EXISTS search_text text GENERATED ALWAYS AS (
-    lower(
-        coalesce(name, '') || ' ' || 
-        coalesce(description, '') || ' ' || 
-        coalesce(category::text, '') || ' ' || 
-        coalesce(metadata->>'tipo', '') || ' ' || 
-        coalesce(metadata->>'material', '') || ' ' || 
-        coalesce(metadata->>'terminaciones', '') || ' ' || 
-        coalesce(metadata->>'marca', '') || ' ' || 
-        coalesce(metadata->>'capacidad', '') || ' ' ||
-        coalesce(metadata->>'tipo_yerba', '') || ' ' ||
-        coalesce(metadata->>'tipo_bombilla', '') || ' ' ||
-        coalesce(metadata->>'categoria_accesorio', '') || ' ' ||
-        coalesce(metadata->>'tipo_combo', '')
-    )
-) STORED;
+ADD COLUMN IF NOT EXISTS search_text text;
+
+-- Llenar la columna para los registros existentes
+UPDATE products SET search_text = lower(
+    coalesce(name, '') || ' ' || 
+    coalesce(description, '') || ' ' || 
+    coalesce(category::text, '') || ' ' || 
+    coalesce(metadata->>'tipo', '') || ' ' || 
+    coalesce(metadata->>'material', '') || ' ' || 
+    coalesce(metadata->>'terminaciones', '') || ' ' || 
+    coalesce(metadata->>'marca', '') || ' ' || 
+    coalesce(metadata->>'capacidad', '') || ' ' ||
+    coalesce(metadata->>'tipo_yerba', '') || ' ' ||
+    coalesce(metadata->>'tipo_bombilla', '') || ' ' ||
+    coalesce(metadata->>'categoria_accesorio', '') || ' ' ||
+    coalesce(metadata->>'tipo_combo', '')
+);
+
+-- Crear función de trigger para mantener actualizado el search_text automáticamente
+CREATE OR REPLACE FUNCTION update_search_text_trigger()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.search_text := lower(
+    coalesce(NEW.name, '') || ' ' || 
+    coalesce(NEW.description, '') || ' ' || 
+    coalesce(NEW.category::text, '') || ' ' || 
+    coalesce(NEW.metadata->>'tipo', '') || ' ' || 
+    coalesce(NEW.metadata->>'material', '') || ' ' || 
+    coalesce(NEW.metadata->>'terminaciones', '') || ' ' || 
+    coalesce(NEW.metadata->>'marca', '') || ' ' || 
+    coalesce(NEW.metadata->>'capacidad', '') || ' ' ||
+    coalesce(NEW.metadata->>'tipo_yerba', '') || ' ' ||
+    coalesce(NEW.metadata->>'tipo_bombilla', '') || ' ' ||
+    coalesce(NEW.metadata->>'categoria_accesorio', '') || ' ' ||
+    coalesce(NEW.metadata->>'tipo_combo', '')
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Crear el trigger
+DROP TRIGGER IF EXISTS trg_update_search_text ON products;
+CREATE TRIGGER trg_update_search_text
+BEFORE INSERT OR UPDATE ON products
+FOR EACH ROW
+EXECUTE FUNCTION update_search_text_trigger();
 
 -- 6. Habilitar extensión pg_trgm (útil para ILIKE '%termino%')
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
@@ -66,4 +95,4 @@ CREATE INDEX IF NOT EXISTS idx_products_search_text ON products USING GIN (searc
 CREATE INDEX IF NOT EXISTS idx_products_metadata ON products USING GIN (metadata);
 
 -- (Opcional) Limpiar el ENUM viejo que ya no se usa
--- DROP TYPE IF EXISTS product_variant CASCADE;
+DROP TYPE IF EXISTS product_variant CASCADE;

@@ -23,8 +23,8 @@ export function AdminDesktopNav() {
             href={item.href}
             className={`flex items-center gap-3 px-4 py-3 font-condensed text-sm uppercase tracking-wider transition-all rounded-sm border-l-2
               ${isActive 
-                ? 'bg-verde-profundo/5 text-verde-profundo border-verde-profundo' 
-                : 'text-texto-suave hover:text-verde-profundo hover:bg-verde-profundo/5 border-transparent'
+                ? 'bg-verde-profundo/10 text-verde-profundo border-verde-profundo shadow-sm font-bold' 
+                : 'text-texto-secundario hover:text-verde-profundo hover:bg-verde-profundo/5 border-transparent'
               }
             `}
           >
@@ -51,8 +51,8 @@ export function AdminMobileNav() {
             href={item.href}
             className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-3 font-condensed text-[10px] uppercase tracking-wider transition-all border-t-2
               ${isActive 
-                ? 'bg-verde-profundo/5 text-verde-profundo border-verde-profundo' 
-                : 'text-texto-suave hover:text-verde-profundo active:bg-verde-profundo/5 border-transparent'
+                ? 'bg-verde-profundo/10 text-verde-profundo border-verde-profundo font-bold shadow-inner' 
+                : 'text-texto-secundario hover:text-verde-profundo active:bg-verde-profundo/10 border-transparent'
               }
             `}
           >

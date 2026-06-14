@@ -96,51 +96,55 @@ export function ProductosClient({ initialProducts }: ProductosClientProps) {
           </div>
         ) : (
           products.map((product) => (
-            <div key={product.id} className="admin-card space-y-3">
-              {/* Nombre + categoría */}
-              <div className="flex items-start justify-between gap-2">
-                <div className="flex items-center gap-3">
-                  {product.images?.[0] && (
-                    <div className="w-10 h-10 rounded-sm overflow-hidden flex-shrink-0 border border-borde-suave bg-hueso-oscuro">
-                      <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
-                    </div>
-                  )}
-                  <div>
-                    <p className="font-condensed text-sm text-verde-profundo uppercase tracking-wide">{product.name}</p>
-                    <span className="badge badge-category mt-1">{CATEGORY_LABELS[product.category]}</span>
+            <div key={product.id} className="admin-card space-y-4 p-4 shadow-sm border border-borde-suave">
+              {/* Nombre + categoría + destacado */}
+              <div className="flex gap-3">
+                {product.images?.[0] ? (
+                  <div className="w-16 h-16 rounded-sm overflow-hidden flex-shrink-0 border border-borde-suave bg-hueso-oscuro">
+                    <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
                   </div>
-                </div>
-                {product.featured && (
-                  <span className="font-condensed text-xs text-red-primary flex-shrink-0">★ Destacado</span>
+                ) : (
+                  <div className="w-16 h-16 rounded-sm border border-dashed border-borde-suave bg-hueso-oscuro flex items-center justify-center flex-shrink-0">
+                    <span className="text-xs text-texto-suave">Sin img</span>
+                  </div>
                 )}
+                <div className="flex-1 min-w-0">
+                  <div className="flex justify-between items-start gap-2">
+                    <p className="font-condensed text-base text-verde-profundo uppercase tracking-wide truncate">{product.name}</p>
+                    {product.featured && <span className="text-red-primary text-xs" title="Destacado">★</span>}
+                  </div>
+                  <span className="badge badge-category mt-1.5 inline-block">{CATEGORY_LABELS[product.category]}</span>
+                </div>
               </div>
+              
               {/* Precio + stock */}
-              <div className="flex items-center justify-between pt-2 border-t border-borde-suave">
-                <span className="font-display text-lg text-verde-profundo">{formatPrice(product.price)}</span>
-                <span className={`font-condensed text-sm ${totalStock(product) < 5 ? 'text-bronce' : 'text-verde-musgo'}`}>
-                  {totalStock(product)} uds.
+              <div className="flex items-center justify-between pt-3 border-t border-borde-suave">
+                <span className="font-display text-xl text-verde-profundo">{formatPrice(product.price)}</span>
+                <span className={`font-condensed px-2 py-1 rounded-sm text-xs uppercase tracking-widest ${totalStock(product) < 5 ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-verde-musgo/10 text-verde-musgo border border-verde-musgo/20'}`}>
+                  {totalStock(product)} en stock
                 </span>
               </div>
+
               {/* Acciones */}
-              <div className="flex gap-2 pt-1">
+              <div className="flex gap-2 pt-2">
                 <button
                   onClick={() => { setEditProduct(product); setShowModal(true) }}
-                  className="flex-1 font-condensed text-xs text-texto-secundario hover:text-verde-profundo uppercase tracking-wider py-2 border border-borde-suave hover:border-verde-claro transition-colors rounded-sm"
+                  className="flex-1 font-condensed text-sm text-texto-secundario hover:text-verde-profundo uppercase tracking-wider py-2.5 border border-borde-suave hover:border-verde-claro transition-colors rounded-sm bg-white"
                 >
                   Editar
                 </button>
                 {deleteConfirm === product.id ? (
-                  <div className="flex gap-1 flex-1">
+                  <div className="flex gap-2 flex-1">
                     <button
                       onClick={() => handleDelete(product.id)}
-                      className="btn-danger text-[10px] px-2 py-1 flex-1"
+                      className="btn-danger text-xs px-2 py-2.5 flex-1"
                       disabled={isDeleting}
                     >
                       Confirmar
                     </button>
                     <button
                       onClick={() => setDeleteConfirm(null)}
-                      className="font-condensed text-[10px] text-texto-secundario hover:text-verde-profundo uppercase tracking-wider px-2 py-1 border border-borde-suave flex-1 rounded-sm"
+                      className="font-condensed text-xs text-texto-secundario hover:text-verde-profundo uppercase tracking-wider px-2 py-2.5 border border-borde-suave flex-1 rounded-sm bg-white"
                     >
                       Cancelar
                     </button>
@@ -148,7 +152,7 @@ export function ProductosClient({ initialProducts }: ProductosClientProps) {
                 ) : (
                   <button
                     onClick={() => setDeleteConfirm(product.id)}
-                    className="btn-danger text-xs px-3 py-2"
+                    className="btn-danger text-sm px-3 py-2.5"
                   >
                     Eliminar
                   </button>
@@ -790,11 +794,11 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
             <p className="font-condensed text-xs text-red-400 text-center py-2">{error}</p>
           )}
 
-          <div className="flex gap-3 pt-4 sticky bottom-0 bg-white py-4 border-t border-borde-suave">
-            <button type="submit" disabled={isLoading} className="btn-primary flex-1 py-3 text-xs">
+          <div className="flex gap-3 pt-4 sticky bottom-0 bg-white py-4 pb-8 sm:pb-4 border-t border-borde-suave">
+            <button type="submit" disabled={isLoading} className="btn-primary flex-1 py-3.5 text-sm">
               {isLoading ? 'Guardando...' : product ? 'Guardar cambios' : 'Crear producto'}
             </button>
-            <button type="button" onClick={onClose} className="btn-secondary px-6 py-3 text-xs">
+            <button type="button" onClick={onClose} className="btn-secondary px-6 py-3.5 text-sm">
               Cancelar
             </button>
           </div>
