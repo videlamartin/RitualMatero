@@ -135,7 +135,7 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.9 }}
             className="flex flex-wrap gap-3 mt-10"
           >
-            {['Pago al recibir', 'Envíos a todo el país', 'Atención personalizada'].map((item) => (
+            {['Transferencia o Efectivo', 'Envíos a todo el país', 'Atención personalizada'].map((item) => (
               <span
                 key={item}
                 className="font-condensed text-xs uppercase tracking-wider px-4 py-2 rounded-full"

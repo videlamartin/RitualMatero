@@ -13,7 +13,7 @@ export function AdminDesktopNav() {
   const pathname = usePathname()
 
   return (
-    <nav className="flex-1 p-4 space-y-2" aria-label="Navegación admin">
+    <nav className="flex-1 p-4 space-y-2 relative z-10" aria-label="Navegación admin">
       {NAV.map((item) => {
         const isActive = pathname.startsWith(item.href)
         
