@@ -267,10 +267,10 @@ export default function CheckoutPage() {
                 </div>
                 <div>
                   <p className="font-condensed text-sm uppercase tracking-wider" style={{ color: '#2C402E' }}>
-                    Pago al recibir / Transferencia
+                    Transferencia Bancaria o Efectivo
                   </p>
                   <p className="font-body text-xs mt-0.5 leading-relaxed" style={{ color: '#5A5A5A' }}>
-                    Abonás en efectivo o por transferencia bancaria. Coordinamos todos los detalles por WhatsApp antes del envío.
+                    Abonás mediante transferencia bancaria o en efectivo. Nos comunicaremos por WhatsApp para coordinar el pago y la entrega.
                   </p>
                 </div>
               </div>

@@ -50,9 +50,9 @@ export default function AdminLoginPage() {
     <div className="min-h-screen pt-24 pb-20 flex items-center justify-center px-4" style={{ backgroundColor: '#F7F2E6' }}>
       <div className="w-full max-w-sm">
         <div className="mb-10 lg:mb-12">
-          <div className="w-12 h-1 bg-green-500 mb-6" />
+          <div className="w-12 h-1 mb-6" style={{ backgroundColor: '#2C402E' }} />
           <h1 className="font-display text-4xl text-verde-profundo tracking-wider block">RITUAL MATERO</h1>
-          <span className="font-condensed text-[11px] text-green-500 tracking-[0.4em] uppercase">
+          <span className="font-condensed text-[11px] tracking-[0.4em] uppercase" style={{ color: '#4A6D4B' }}>
             Panel de Administración
           </span>
         </div>
