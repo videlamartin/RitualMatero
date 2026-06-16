@@ -306,7 +306,7 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
   })
 
   // Stock sizes list (custom strings)
-  const [sizesList, setSizesList] = useState<{ size: string; stock: number }[]>(() => {
+  const [sizesList, setSizesList] = useState<{ size: string; stock: number | string }[]>(() => {
     if (product?.product_sizes && product.product_sizes.length > 0) {
       const isJustUnico = product.product_sizes.length === 1 && product.product_sizes[0].size === 'unico'
       if (!isJustUnico) {
@@ -317,7 +317,7 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
   })
   
   const [newSizeName, setNewSizeName] = useState('')
-  const [stockUnico, setStockUnico] = useState(() => {
+  const [stockUnico, setStockUnico] = useState<number | string>(() => {
     if (product?.product_sizes?.length === 1 && product.product_sizes[0].size === 'unico') {
       return product.product_sizes[0].stock
     }
@@ -423,14 +423,14 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
         id: product?.id,
         name: form.name,
         description: form.description || null,
-        price: parseFloat(form.price),
+        price: parseFloat(form.price) || 0,
         category: form.category,
         featured: form.featured,
         images: imageUrls,
         metadata,
         sizes: hasSizes 
-          ? sizesList
-          : [{ size: 'unico', stock: stockUnico }]
+          ? sizesList.map(s => ({ size: s.size, stock: typeof s.stock === 'string' ? parseInt(s.stock, 10) || 0 : s.stock }))
+          : [{ size: 'unico', stock: typeof stockUnico === 'string' ? parseInt(stockUnico, 10) || 0 : stockUnico }]
       }
 
       await upsertProduct(data)
@@ -497,7 +497,10 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
                 <select
                   className="input-field"
                   value={form.category}
-                  onChange={(e) => setForm({ ...form, category: e.target.value as ProductCategory })}
+                  onChange={(e) => {
+                    setForm({ ...form, category: e.target.value as ProductCategory })
+                    setMetadata({})
+                  }}
                 >
                   {Object.entries(CATEGORY_LABELS).map(([value, label]) => (
                     <option key={value} value={value}>{label}</option>
@@ -509,7 +512,7 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
 
           {/* ── METADATA DINAMICA SEGUN CATEGORIA ── */}
           <div className="space-y-4 border-b border-borde-suave pb-6 bg-[#F7F2E6]/50 -mx-6 px-6 pt-4">
-            <h3 className="font-condensed tracking-wider text-[#4A6D4B] uppercase">Atributos (Metadatos)</h3>
+            <h3 className="font-condensed tracking-wider text-[#4A6D4B] uppercase">Atributos</h3>
             
             {form.category === 'mates' && (
               <div className="grid grid-cols-2 gap-4">
@@ -522,7 +525,11 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
                 </div>
                 <div>
                   <label className="label-field">Material principal</label>
-                  <select className="input-field" value={metadata.material?.[0] || (typeof metadata.material === 'string' ? metadata.material : '')} onChange={(e) => setMetadata({ ...metadata, material: e.target.value })}>
+                  <select 
+                    className="input-field" 
+                    value={Array.isArray(metadata.material) ? (metadata.material[0] || '') : (metadata.material || '')} 
+                    onChange={(e) => setMetadata({ ...metadata, material: e.target.value ? [e.target.value] : [] })}
+                  >
                     <option value="">Seleccionar...</option>
                     {MATE_MATERIALS.map(o => <option key={o} value={o}>{o}</option>)}
                   </select>
@@ -716,8 +723,9 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
                           className="w-1/4 bg-transparent border-b border-borde-suave text-verde-profundo font-condensed text-center focus:outline-none"
                           value={s.stock}
                           onChange={(e) => {
+                            const val = e.target.value;
                             const newSizes = [...sizesList];
-                            newSizes[idx].stock = parseInt(e.target.value) || 0;
+                            newSizes[idx].stock = val === '' ? '' : parseInt(val, 10);
                             setSizesList(newSizes);
                           }}
                         />
@@ -769,7 +777,7 @@ function ProductModal({ product, onClose, onSuccess }: ProductModalProps) {
                       min="0"
                       className="w-full bg-transparent border-b border-borde-suave text-verde-profundo font-condensed text-center focus:outline-none"
                       value={stockUnico}
-                      onChange={(e) => setStockUnico(parseInt(e.target.value) || 0)}
+                      onChange={(e) => setStockUnico(e.target.value === '' ? '' : parseInt(e.target.value, 10))}
                     />
                   </div>
                 </>

@@ -16,6 +16,7 @@ export default function CheckoutPage() {
   const { items, getTotal, clearCart } = useCartStore()
   const [isLoading, setIsLoading] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [isSuccess, setIsSuccess] = useState(false)
   const total = getTotal()
 
   const {
@@ -66,13 +67,27 @@ export default function CheckoutPage() {
         throw new Error(json.error ?? 'Error al procesar el pedido')
       }
 
+      setIsSuccess(true)
       clearCart()
       router.push(`/confirmacion/${json.orderId}`)
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : 'Error inesperado')
-    } finally {
       setIsLoading(false)
     }
+  }
+
+  if (isSuccess) {
+    return (
+      <div className="min-h-screen pt-24 flex items-center justify-center" style={{ backgroundColor: '#F7F2E6' }}>
+        <div className="text-center">
+          <svg className="w-8 h-8 animate-spin mx-auto mb-4 text-[#2C402E]" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+          </svg>
+          <p className="font-condensed uppercase tracking-wider text-[#5A5A5A]">Preparando tu pedido...</p>
+        </div>
+      </div>
+    )
   }
 
   if (items.length === 0) {

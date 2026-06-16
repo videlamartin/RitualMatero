@@ -46,7 +46,7 @@ export const orderApiSchema = z.object({
   notes: z.string().optional(),
   items: z.array(z.object({
     product_id: z.string().uuid(),
-    size: z.enum(['250g', '500g', '1kg', 'unico', 'natural', 'curado']),
+    size: z.string().min(1),
     quantity: z.number().int().positive().max(10),
     unit_price: z.number().positive(),
     product_name: z.string(),

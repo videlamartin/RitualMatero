@@ -21,25 +21,26 @@ const NAV_LINKS = [
 // SVG logo: ícono de mate + texto "RITUAL MATERO"
 function MateLogo() {
   return (
-    <Link href="/" className="flex items-center gap-3 group" aria-label="Ritual Matero - Inicio">
-      <Image
-        src={brandLogo}
-        alt="Ritual Matero Logo"
-        width={40}
-        height={40}
-        className="flex-shrink-0 transition-transform duration-300 group-hover:scale-105 rounded-full"
-      />
+    <Link href="/" className="flex items-center gap-2 sm:gap-3 group" aria-label="Ritual Matero - Inicio">
+      <div className="relative w-9 h-9 sm:w-10 sm:h-10 flex-shrink-0">
+        <Image
+          src={brandLogo}
+          alt="Ritual Matero Logo"
+          fill
+          className="transition-transform duration-300 group-hover:scale-105 rounded-full object-cover"
+        />
+      </div>
 
       {/* Text */}
       <div className="flex flex-col leading-none">
         <span
-          className="font-display text-xl uppercase tracking-wider transition-colors duration-200"
+          className="font-display text-[15px] sm:text-xl uppercase tracking-wider transition-colors duration-200"
           style={{ color: '#2C402E' }}
         >
           RITUAL MATERO
         </span>
         <span
-          className="font-condensed text-[9px] uppercase tracking-[0.4em] -mt-0.5"
+          className="font-condensed text-[8px] sm:text-[9px] uppercase tracking-[0.2em] sm:tracking-[0.4em] -mt-0.5 hidden sm:block"
           style={{ color: '#4A6D4B' }}
         >
           Mates · Termos · Bombillas · Accesorios
